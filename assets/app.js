@@ -42,7 +42,7 @@
       0
     );
     const stats = $("#stats");
-    [["진행 주차", weeks.length], ["학습 항목", itemCount], ["관련 자료", linkCount]].forEach(([label, value]) =>
+    [["진행 월", groupByMonth(weeks).length], ["진행 주차", weeks.length], ["학습 항목", itemCount], ["관련 자료", linkCount]].forEach(([label, value]) =>
       stats.append(el("div", {}, [el("dt", { text: label }), el("dd", { text: String(value) })]))
     );
   }
@@ -66,7 +66,7 @@
   function renderCard(item) {
     const body = el("div", { class: "card-body" }, [
       item.category && el("span", { class: "category", text: item.category }),
-      el("h3", { text: item.title }),
+      el("h4", { text: item.title }),
       item.description && el("p", { text: item.description }),
       item.tools && item.tools.length
         ? el("ul", { class: "tools", "aria-label": "사용 도구" }, item.tools.map((t) => el("li", { text: t })))
@@ -90,36 +90,80 @@
     return el("article", { class: "card" }, [video, body]);
   }
 
+  // "2026-11" → "2026년 11월"
+  function monthLabel(key) {
+    const [y, m] = String(key || "").split("-");
+    return y && m ? `${y}년 ${Number(m)}월` : "기타";
+  }
+
+  // weeks 배열 순서를 유지하면서 month 값으로 묶기
+  function groupByMonth(list) {
+    const groups = new Map();
+    list.forEach((w) => {
+      const key = w.month || "etc";
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(w);
+    });
+    return [...groups.entries()].map(([key, ws]) => ({ key, weeks: ws }));
+  }
+
+  function renderWeek(week, items) {
+    return el("section", { class: "week", id: week.id }, [
+      el("div", { class: "week-head" }, [
+        el("h3", { text: week.label }),
+        week.period && el("span", { class: "period", text: week.period }),
+        el("a", { class: "anchor", href: "#" + week.id, title: "이 주차 링크", text: "# 링크" }),
+      ]),
+      week.summary && el("p", { class: "week-summary", text: week.summary }),
+      items.length
+        ? el("div", { class: "items" }, items.map(renderCard))
+        : el("p", { class: "empty", text: "아직 등록된 항목이 없습니다." }),
+    ]);
+  }
+
   function renderWeeks() {
     const container = $("#weeks");
     const nav = $("#week-nav");
     container.replaceChildren();
     nav.replaceChildren();
+    const filtering = state.query || state.category !== "전체";
 
-    weeks.forEach((week) => {
-      const items = (week.items || []).filter(matches);
-      if (!items.length && (state.query || state.category !== "전체")) return;
+    groupByMonth(weeks).forEach((group) => {
+      const visible = group.weeks
+        .map((w) => ({ week: w, items: (w.items || []).filter(matches) }))
+        .filter((v) => v.items.length || !filtering);
+      if (!visible.length) return;
+
+      const monthId = "m-" + group.key;
+      const itemTotal = visible.reduce((n, v) => n + v.items.length, 0);
+      const monthInfo = (data.months || {})[group.key] || {};
 
       nav.append(
-        el("li", {}, [
-          el("a", { href: "#" + week.id, "data-week": week.id }, [
-            document.createTextNode(week.label),
-            el("span", { class: "count", text: String(items.length) }),
-          ]),
+        el("li", { class: "nav-month" }, [
+          el("a", { class: "month-link", href: "#" + monthId, "data-week": monthId, text: monthLabel(group.key) }),
+          el(
+            "ol",
+            {},
+            visible.map((v) =>
+              el("li", {}, [
+                el("a", { href: "#" + v.week.id, "data-week": v.week.id }, [
+                  document.createTextNode(v.week.label),
+                  el("span", { class: "count", text: String(v.items.length) }),
+                ]),
+              ])
+            )
+          ),
         ])
       );
 
       container.append(
-        el("section", { class: "week", id: week.id }, [
-          el("div", { class: "week-head" }, [
-            el("h2", { text: week.label }),
-            week.period && el("span", { class: "period", text: week.period }),
-            el("a", { class: "anchor", href: "#" + week.id, title: "이 주차 링크", text: "# 링크" }),
+        el("section", { class: "month", id: monthId }, [
+          el("div", { class: "month-head" }, [
+            el("h2", { text: monthLabel(group.key) }),
+            el("span", { class: "meta", text: `${visible.length}개 주차 · ${itemTotal}개 항목` }),
           ]),
-          week.summary && el("p", { class: "week-summary", text: week.summary }),
-          items.length
-            ? el("div", { class: "items" }, items.map(renderCard))
-            : el("p", { class: "empty", text: "아직 등록된 항목이 없습니다." }),
+          monthInfo.summary && el("p", { class: "month-summary", text: monthInfo.summary }),
+          ...visible.map((v) => renderWeek(v.week, v.items)),
         ])
       );
     });
@@ -139,8 +183,9 @@
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
+          const ids = [entry.target.id, entry.target.closest(".month")?.id];
           document.querySelectorAll(".week-nav a").forEach((a) =>
-            a.classList.toggle("is-current", a.dataset.week === entry.target.id)
+            a.classList.toggle("is-current", ids.includes(a.dataset.week))
           );
         });
       },

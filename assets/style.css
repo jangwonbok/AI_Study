@@ -53,15 +53,26 @@ a{color:var(--accent)}
 .week-nav{position:sticky;top:84px;align-self:start}
 .nav-title{margin:0 0 8px;font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.08em}
 .week-nav ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.week-nav > ol{gap:14px}
 .week-nav a{display:flex;justify-content:space-between;gap:8px;padding:7px 10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:14px}
 .week-nav a:hover{background:var(--surface)}
 .week-nav a.is-current{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.week-nav a.month-link{font-weight:700;font-size:13px;color:var(--muted)}
+.week-nav a.month-link.is-current{background:none;color:var(--ink)}
+.week-nav .nav-month ol a{padding-left:16px}
 .week-nav .count{color:var(--muted);font-size:12px}
 
+/* months */
+.weeks{display:flex;flex-direction:column;gap:72px;min-width:0}
+.month{display:flex;flex-direction:column;gap:44px}
+.month-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.month-head h2{margin:0;font-size:30px;letter-spacing:-.03em}
+.month-head .meta{color:var(--muted);font-size:14px}
+.month-summary{margin:-28px 0 0;color:var(--muted)}
+
 /* weeks */
-.weeks{display:flex;flex-direction:column;gap:56px;min-width:0}
 .week-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
-.week-head h2{margin:0;font-size:24px;letter-spacing:-.02em}
+.week-head h3{margin:0;font-size:21px;letter-spacing:-.02em}
 .week-head .period{color:var(--muted);font-size:14px}
 .week-head .anchor{margin-left:auto;font-size:13px;color:var(--muted);text-decoration:none}
 .week-head .anchor:hover{color:var(--accent)}
@@ -72,7 +83,7 @@ a{color:var(--accent)}
 .card video{display:block;width:100%;aspect-ratio:16/9;background:#000;object-fit:contain}
 .card-body{padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
 .category{align-self:flex-start;font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-soft);padding:3px 9px;border-radius:999px}
-.card h3{margin:0;font-size:17px;line-height:1.4}
+.card h4{margin:0;font-size:17px;line-height:1.4}
 .card p{margin:0;color:var(--muted);font-size:14px}
 .tools{display:flex;gap:6px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
 .tools li{font-size:12px;border:1px solid var(--line);border-radius:6px;padding:2px 7px;color:var(--muted)}
@@ -89,7 +100,12 @@ a{color:var(--accent)}
   .layout{grid-template-columns:1fr;gap:20px;padding-top:20px}
   .week-nav{position:static}
   .week-nav ol{flex-direction:row;overflow-x:auto;padding-bottom:4px}
+  .week-nav > ol{gap:6px}
+  .week-nav .nav-month{display:flex;align-items:center}
+  .week-nav .nav-month ol{overflow:visible;padding:0}
+  .week-nav .nav-month ol a{padding-left:10px}
   .week-nav a{white-space:nowrap}
+  .month-head h2{font-size:24px}
   .items{grid-template-columns:1fr}
   .hero{padding:40px 0 28px}
   #search{flex:1 1 100%}

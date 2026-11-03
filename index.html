@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 스터디 아카이브</title>
+<meta name="description" content="AI 스터디에서 매주 배우고 만든 것들을 주차별·항목별로 정리한 아카이브">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">AI STUDY</p>
+    <h1 id="site-title">AI 스터디 아카이브</h1>
+    <p id="site-desc" class="lead"></p>
+    <dl class="stats" id="stats"></dl>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap toolbar-inner">
+    <input id="search" type="search" placeholder="제목, 설명, 도구로 검색" aria-label="검색">
+    <div id="filters" class="chips" role="group" aria-label="분류 필터"></div>
+  </div>
+</div>
+
+<main class="wrap layout">
+  <nav class="week-nav" aria-label="주차 목록">
+    <p class="nav-title">주차</p>
+    <ol id="week-nav"></ol>
+  </nav>
+  <section id="weeks" class="weeks" aria-live="polite"></section>
+</main>
+
+<footer class="wrap footer">
+  <a id="repo-link" href="#" target="_blank" rel="noopener">GitHub 저장소</a>
+</footer>
+
+<script src="data/study-data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

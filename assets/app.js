@@ -237,9 +237,9 @@
   }
 
   // 웹 작업은 실제 페이지를 화면 가득 띄워서 그 안에서 둘러볼 수 있게
-  // 페이지가 화면보다 길면 iframe을 내용 높이만큼 늘리고 안쪽 스크롤은 꺼서 이중 스크롤을 막음 (휠은 늘 바깥 페이지로)
-  // 화면 하나짜리 페이지(슬라이드 등)는 카드가 화면에 꽉 찰 때까지 휠을 바깥으로 넘기고, 그다음 아래로 굴릴 때만 안쪽에 맡김
-  // (다른 출처라 안을 못 보면 예전처럼 안에서 스크롤)
+  // 휠은 바깥 페이지가 먼저 받고, 카드가 화면에 꽉 차면 그때부터 안쪽 페이지가 직접 스크롤함
+  // (안쪽 페이지의 스크롤 애니메이션이 그대로 동작) · 안쪽 맨 위에서 위로 굴리면 다시 바깥으로
+  // 안쪽 스크롤바는 숨겨서 스크롤바가 두 개로 보이지 않게 함 (다른 출처라 안을 못 보면 그냥 안에서 스크롤)
   function livePreview(url, title) {
     const frame = el("iframe", { src: toHref(url), title: `${title} — live page`, loading: "lazy" });
     frame.addEventListener("load", () => {
@@ -247,20 +247,15 @@
       try {
         doc = frame.contentDocument;
       } catch (_) {}
-      if (!doc || !doc.body) return;
       const card = frame.closest(".sec-card");
-      if (!card) return;
-      const tall = doc.documentElement.scrollHeight > frame.clientHeight + 1;
-      const fit = () => {
-        const h = doc.documentElement.scrollHeight;
-        if (h <= frame.clientHeight + 1) return;
-        card.style.height = `${h}px`;
-        if (lenis) lenis.resize();
-      };
-      frame.contentWindow.addEventListener(
+      if (!doc || !doc.head || !card) return;
+      doc.head.append(Object.assign(doc.createElement("style"), { textContent: "html{scrollbar-width:none}html::-webkit-scrollbar{display:none}" }));
+      const win = frame.contentWindow;
+      win.addEventListener(
         "wheel",
         (ev) => {
-          if (!tall && Math.abs(card.getBoundingClientRect().top) <= 2 && ev.deltaY > 0) return;
+          const docked = Math.abs(card.getBoundingClientRect().top) <= 2;
+          if (docked && (ev.deltaY > 0 || win.scrollY > 0)) return;
           ev.preventDefault();
           ev.stopPropagation();
           if (lenis) window.dispatchEvent(new WheelEvent("wheel", { deltaX: ev.deltaX, deltaY: ev.deltaY, deltaMode: ev.deltaMode, bubbles: true, cancelable: true }));
@@ -268,10 +263,6 @@
         },
         { capture: true, passive: false }
       );
-      if (!tall) return;
-      doc.documentElement.style.overflow = "hidden";
-      fit();
-      new ResizeObserver(fit).observe(doc.body);
     });
     return el("span", { class: "media live" }, [frame]);
   }
@@ -773,10 +764,7 @@
     if (detailState.open) {
       const secs = [...view.querySelectorAll(".sec")];
       if (secs.length < 2) return;
-      const rects = secs.map((s) => s.getBoundingClientRect());
-      // 화면보다 긴 섹션(내용 높이로 늘린 웹페이지)을 읽는 중이면 맞추지 않음
-      if (rects.some((r) => r.top < -1 && r.height > innerHeight + 1)) return;
-      const top = rects.map((r) => r.top).reduce((a, b) => (Math.abs(b) < Math.abs(a) ? b : a));
+      const top = secs.map((s) => s.getBoundingClientRect().top).reduce((a, b) => (Math.abs(b) < Math.abs(a) ? b : a));
       if (Math.abs(top) > 1) scrollToY(scrollY + top);
       return;
     }

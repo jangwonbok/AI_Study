@@ -15,6 +15,7 @@ AI 스터디에서 매주 배우고 만든 것들을 연도 · 월 · 주차별�
 | 1주차 | AI로 포트폴리오 웹사이트 만들기 | [결과물](2026/11/week1/Main/portfolio/index.html) |
 | 1주차 | AI 상세페이지 – Open2U | [결과물](2026/11/week1/Detail/open2u-works-detail.html) |
 | 1주차 | AI 상세페이지 – KT 커뮤니스 | [결과물](2026/11/week1/Detail/kt-communis-detail.html) |
+| 1주차 | AI 상세페이지 – KT 마이케어 | [결과물](2026/11/week1/Detail/kt-mycare-detail.html) |
 | 1주차 | AI 영상 제작 – Open2U 히어로 영상 | [영상](2026/11/week1/Video/open2u-hero.mp4) |
 | 1주차 | AI 영상 제작 – GS칼텍스 히어로 영상 | [영상](2026/11/week1/Video/gs-caltex-hero.mp4) |
 | 1주차 | AI 영상 제작 – 마이케어 소개 영상 | [영상](2026/11/week1/Video/vdo_works_kt_mycare_912.mp4) |

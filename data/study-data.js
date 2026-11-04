@@ -84,6 +84,15 @@ window.STUDY_DATA = {
           ]
         },
         {
+          title: "KT MyCare detail page",
+          category: "Detail",
+          description: "A project detail page for KT MyCare, built with AI.",
+          tools: [],
+          links: [
+            { label: "View page", url: "2026/11/week1/Detail/kt-mycare-detail.html", type: "demo" }
+          ]
+        },
+        {
           title: "Open2U hero",
           category: "Video",
           description: "The hero film for the Open2U detail page, made with AI.",

@@ -13,6 +13,10 @@ AI 스터디에서 매주 배우고 만든 것들을 연도 · 월 · 주차별�
 | 주차 | 학습 항목 | 자료 |
 | --- | --- | --- |
 | 1주차 | AI로 포트폴리오 웹사이트 만들기 | [결과물](2026/11/week1/Main/portfolio/index.html) |
+| 1주차 | AI 상세페이지 – Open2U | [결과물](2026/11/week1/Detail/open2u-works-detail.html) |
+| 1주차 | AI 상세페이지 – KT 커뮤니스 | [결과물](2026/11/week1/Detail/kt-communis-detail.html) |
+| 1주차 | AI 영상 제작 – Open2U 히어로 영상 | [영상](2026/11/week1/Video/open2u-hero.mp4) |
+| 1주차 | AI 영상 제작 – GS칼텍스 히어로 영상 | [영상](2026/11/week1/Video/gs-caltex-hero.mp4) |
 | 1주차 | AI 영상 제작 – 마이케어 소개 영상 | [영상](2026/11/week1/Video/vdo_works_kt_mycare_912.mp4) |
 | 1주차 | AI 영상 제작 – GS칼텍스 소개 영상 | [영상](2026/11/week1/Video/vdo_works_gscaltex_912.mp4) |
 | 1주차 | AI 영상 제작 – 캐치온 시네마틱 영상 | [영상](2026/11/week1/Video/catchon_cinematic_1920x1080.mp4) |
@@ -43,7 +47,23 @@ data/study-data.js      ← 매주 이 파일만 수정
 
 월 폴더는 정렬이 잘 되도록 두 자리(`01`, `02` … `12`)로 씁니다.
 
-## 매주 업데이트하는 방법
+## 작업물 자동 추가
+
+`연도/월/weekN/폴더/` 에 파일을 넣고 푸시만 하면, 홈페이지가 GitHub의 파일 목록을 읽어 리스트에 자동으로 카드를 붙입니다.
+(`study-data.js` 에 이미 적은 파일은 중복으로 추가하지 않습니다)
+
+| 넣는 위치 | 만들어지는 카드 |
+| --- | --- |
+| `폴더/파일.mp4` (webm·mov) | 영상 카드 |
+| `폴더/파일.html` | 웹페이지 카드 (페이지 미리보기) |
+| `폴더/하위폴더/index.html` | 사이트 카드 (같은 폴더의 `thumb.jpg`·`png`·`webp`가 있으면 썸네일로 사용) |
+
+- 분류는 폴더 이름을 그대로 씁니다 (`Main` → `Web`, `Detail`, `Video` …).
+- 제목은 파일 이름으로 만듭니다. 예) `kt-communis-detail.html` → `Kt Communis Detail`
+- 제목·설명을 직접 다듬고 싶으면 아래처럼 `study-data.js` 에 적으면 됩니다. 적은 내용이 우선합니다.
+- 로컬에서 열면 GitHub에 이미 푸시된 파일만 자동으로 잡힙니다.
+
+## 매주 업데이트하는 방법 (직접 적기)
 
 1. 주차 폴더(예: `2026/11/week2/`)를 만들고 결과물을 넣습니다.
 2. `data/study-data.js` 의 `weeks` 배열에 아래 블록을 추가합니다.

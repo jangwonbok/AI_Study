@@ -2,6 +2,52 @@
   const data = window.STUDY_DATA || { weeks: [] };
   const pad = (n) => String(n).padStart(2, "0");
 
+  // ── 작업물 자동 추가 ──────────────────────────────────────────
+  // auto-works.js가 받아 온 파일 목록(연도/월/weekN/폴더/…)에서 study-data.js에 아직 없는 것만 카드로 만듦
+  //   폴더/파일.mp4·webm·mov → 영상 카드,  폴더/파일.html → 웹페이지 카드,  폴더/하위폴더/index.html → 사이트 카드
+  //   분류는 폴더 이름 (Main은 Web)
+  (function addAutoWorks() {
+    const files = window.WORK_FILES || [];
+    if (!files.length) return;
+    data.weeks = data.weeks || [];
+    const known = new Set(
+      data.weeks.flatMap((w) =>
+        (w.items || []).flatMap((i) => [i.video, i.thumbnail, i.preview, ...(i.links || []).map((l) => l.url)])
+      )
+    );
+    const fileSet = new Set(files);
+    const nameOf = (s) =>
+      s
+        .replace(/\.[^.]+$/, "")
+        .replace(/[_-]?\d{3,4}x\d{3,4}/g, "")
+        .split(/[-_\s]+/)
+        .filter(Boolean)
+        .map((w) => w[0].toUpperCase() + w.slice(1))
+        .join(" ");
+
+    files.forEach((path) => {
+      const m = path.match(/^(\d{4})\/(\d{2})\/week(\d+)\/([^/]+)\/(.+)$/);
+      if (!m || known.has(path)) return;
+      const [, year, month, week, folder, rest] = m;
+      const parts = rest.split("/");
+      const category = folder === "Main" ? "Web" : folder;
+      let item = null;
+      if (parts.length === 1 && /\.(mp4|webm|mov)$/i.test(rest)) {
+        item = { title: nameOf(rest), category, video: path, links: [{ label: "Open video", url: path, type: "video" }] };
+      } else if (parts.length === 1 && /\.html?$/i.test(rest)) {
+        item = { title: nameOf(rest), category, links: [{ label: "View page", url: path, type: "demo" }] };
+      } else if (parts.length === 2 && /^index\.html?$/i.test(parts[1])) {
+        const thumb = ["jpg", "png", "webp"].map((x) => `${path.slice(0, -parts[1].length)}thumb.${x}`).find((p) => fileSet.has(p));
+        item = { title: nameOf(parts[0]), category, thumbnail: thumb, links: [{ label: "View site", url: path, type: "demo" }] };
+      }
+      if (!item) return;
+      known.add(path);
+      let w = data.weeks.find((x) => x.year === +year && x.month === +month && x.week === +week);
+      if (!w) data.weeks.push((w = { year: +year, month: +month, week: +week, items: [] }));
+      (w.items = w.items || []).push(item);
+    });
+  })();
+
   // year/month/week 값으로 ID·이름을 만들고 최신순으로 정렬
   const weeks = (data.weeks || [])
     .map((w) => ({

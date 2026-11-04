@@ -7,6 +7,10 @@
  *
  * 작업물 폴더 규칙:  연도/월/week번호/   예) 2026/11/week1/, 2026/12/week1/, 2027/01/week1/
  *
+ * 자동 추가: 연도/월/weekN/폴더/ 에 영상(mp4)·웹페이지(html)·사이트(하위폴더/index.html)를 넣고 푸시하면
+ *           여기에 적지 않아도 홈페이지 리스트에 자동으로 붙습니다. (제목은 파일 이름, 분류는 폴더 이름)
+ *           제목·설명을 다듬고 싶을 때만 아래에 직접 적으세요. 적은 내용이 우선합니다.
+ *
  * 주차(week) 항목
  *   year     : 연도                                       예) 2026
  *   month    : 월                                         예) 11
@@ -68,6 +72,15 @@ window.STUDY_DATA = {
           tools: [],
           links: [
             { label: "View page", url: "2026/11/week1/Detail/open2u-works-detail.html", type: "demo" }
+          ]
+        },
+        {
+          title: "KT Communis detail page",
+          category: "Detail",
+          description: "A project detail page for KT Communis, built with AI.",
+          tools: [],
+          links: [
+            { label: "View page", url: "2026/11/week1/Detail/kt-communis-detail.html", type: "demo" }
           ]
         },
         {

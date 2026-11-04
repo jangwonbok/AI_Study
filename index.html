@@ -1,42 +1,89 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI 스터디 아카이브</title>
-<meta name="description" content="AI 스터디에서 매주 배우고 만든 것들을 주차별·항목별로 정리한 아카이브">
+<meta name="theme-color" content="#f4f4f4">
+<title>AI Study</title>
+<meta name="description" content="Things I learn and make with AI, week by week.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
-<header class="hero">
-  <div class="wrap">
-    <p class="eyebrow">AI STUDY</p>
-    <h1 id="site-title">AI 스터디 아카이브</h1>
-    <p id="site-desc" class="lead"></p>
-    <dl class="stats" id="stats"></dl>
-  </div>
-</header>
+<body class="is-loading">
+<a class="skip-link" href="#stage">Skip to content</a>
 
-<div class="toolbar">
-  <div class="wrap toolbar-inner">
-    <input id="search" type="search" placeholder="제목, 설명, 도구로 검색" aria-label="검색">
-    <div id="filters" class="chips" role="group" aria-label="분류 필터"></div>
-  </div>
-</div>
+<!-- 왼쪽 고정 패널: 이름·검색 / 연·월·주 태그와 지금 보는 작업 제목·번호 / 소개·분류 -->
+<!-- (data-lenis-prevent를 달면 패널 위 휠이 기본 스크롤로 새어 나가 Lenis와 엇갈리며 버벅임) -->
+<aside class="panel">
+  <header class="panel-top">
+    <h1 class="brand"><a id="site-title" href="#" aria-label="Back to first work"></a></h1>
+    <nav class="site-nav" aria-label="Primary">
+      <label class="search-field" role="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="search" type="search" placeholder="Search" aria-label="Search by title, description or tool" autocomplete="off">
+        <kbd aria-hidden="true">/</kbd>
+      </label>
+      <a id="repo-link" class="pill-link" href="#" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+  </header>
 
-<main class="wrap layout">
-  <nav class="week-nav" aria-label="주차 목록">
-    <p class="nav-title">주차</p>
-    <ol id="week-nav"></ol>
-  </nav>
-  <section id="weeks" class="weeks" aria-live="polite"></section>
+  <section class="panel-main" aria-label="Current work">
+    <div id="periods" class="periods" role="group" aria-label="Period"></div>
+    <div class="headline" aria-live="polite">
+      <p id="active-title" class="line"></p>
+      <p id="active-sub" class="line line-sub"></p>
+    </div>
+    <div class="actions">
+      <span id="counter" class="counter" aria-live="polite"></span>
+    </div>
+    <!-- 상세 화면에서만: 정보 보기(누르면 ×로 바뀜) · 결과물 열기 (아이콘: Lucide info / x / external-link, ISC) -->
+    <div class="detail-actions">
+      <button id="info-toggle" class="icon-btn info-btn" type="button" aria-pressed="false" aria-label="Show work info">
+        <span class="ico ico-swap" aria-hidden="true">
+          <svg class="lucide lucide-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          <svg class="lucide lucide-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </span>
+      </button>
+      <a id="open-link" class="icon-btn" target="_blank" rel="noopener" aria-label="Open work">
+        <span class="ico" aria-hidden="true">
+          <svg class="lucide lucide-external-link" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+          <svg class="lucide lucide-external-link" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <footer class="panel-bottom">
+    <p id="site-desc" class="intro-desc"></p>
+    <p id="week-meta" class="week-meta"></p>
+    <p id="result-count" class="result-count" aria-live="polite"></p>
+    <div class="controls">
+      <div id="filters" class="chips" role="group" aria-label="Filter by category"></div>
+    </div>
+  </footer>
+</aside>
+
+<!-- 오른쪽에 세로로 쌓이는 큰 카드 -->
+<main id="stage" class="stage" aria-label="Works">
+  <div id="works" class="works"></div>
+  <!-- 상세 화면: 누른 카드가 맨 위 큰 카드로 커지고, 아래로 섹션 카드가 이어짐 -->
+  <section id="detail-view" class="detail-view" aria-label="Work detail" hidden></section>
 </main>
 
-<footer class="wrap footer">
-  <a id="repo-link" href="#" target="_blank" rel="noopener">GitHub 저장소</a>
-</footer>
+<!-- 카드 왼쪽의 축소/확대 버튼: 큰 카드 ↔ 가운데 작은 썸네일 (아이콘: Lucide shrink / expand, ISC) -->
+<button id="size-toggle" class="icon-btn size-btn" type="button" aria-pressed="false" aria-label="Shrink works">
+  <span class="ico ico-swap" aria-hidden="true">
+    <svg class="lucide lucide-shrink" viewBox="0 0 24 24"><path d="m15 15 6 6m-6-6v4.8m0-4.8h4.8"/><path d="M9 19.8V15m0 0H4.2M9 15l-6 6"/><path d="M15 4.2V9m0 0h4.8M15 9l6-6"/><path d="M9 4.2V9m0 0H4.2M9 9 3 3"/></svg>
+    <svg class="lucide lucide-expand" viewBox="0 0 24 24"><path d="m21 21-6-6m6 6v-4.8m0 4.8h-4.8"/><path d="M3 16.2V21m0 0h4.8M3 21l6-6"/><path d="M21 7.8V3m0 0h-4.8M21 3l-6 6"/><path d="M3 7.8V3m0 0h4.8M3 3l6 6"/></svg>
+  </span>
+</button>
+<!-- 작게 보기에서 오른쪽 끝의 점 인디케이터 -->
+<nav id="dots" class="dots" aria-label="Works"></nav>
 
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script src="data/study-data.js"></script>
 <script src="assets/app.js"></script>
 </body>

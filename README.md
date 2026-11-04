@@ -14,6 +14,11 @@ AI 스터디에서 매주 배우고 만든 것들을 연도 · 월 · 주차별�
 | --- | --- | --- |
 | 1주차 | AI로 포트폴리오 웹사이트 만들기 | [결과물](2026/11/week1/Main/portfolio/index.html) |
 | 1주차 | AI 영상 제작 – 마이케어 소개 영상 | [영상](2026/11/week1/Video/vdo_works_kt_mycare_912.mp4) |
+| 1주차 | AI 영상 제작 – GS칼텍스 소개 영상 | [영상](2026/11/week1/Video/vdo_works_gscaltex_912.mp4) |
+| 1주차 | AI 영상 제작 – 캐치온 시네마틱 영상 | [영상](2026/11/week1/Video/catchon_cinematic_1920x1080.mp4) |
+| 1주차 | AI 영상 제작 – 캐치온 히어로 영상 | [영상](2026/11/week1/Video/catchon_hero_1920x1080.mp4) |
+| 1주차 | AI 영상 제작 – 체인즈 히어로 영상 | [영상](2026/11/week1/Video/chainz_hero_1920x1080.mp4) |
+| 1주차 | AI 영상 제작 – KT 커뮤니스 히어로 영상 | [영상](2026/11/week1/Video/kt_communis_hero_1920x1080_1.mp4) |
 
 ## 폴더 구조
 
@@ -58,6 +63,7 @@ data/study-data.js      ← 매주 이 파일만 수정
          description: "무엇을 배우고 만들었는지",
          tools: ["사용한 AI 도구"],
          // video: "2026/11/week2/Video/sample.mp4",   // 카드에서 바로 재생 (선택)
+         // thumbnail: "2026/11/week2/Main/thumb.jpg", // 썸네일 이미지 (선택, 없으면 demo 링크 페이지를 자동 미리보기)
          links: [
            { label: "결과물 보기", url: "2026/11/week2/Main/index.html", type: "demo" },
            { label: "참고 자료", url: "https://example.com", type: "external" }

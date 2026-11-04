@@ -1,0 +1,16 @@
+<!-- Works/detail/?slug=open2u_2023 : .detail_visual_area 영상 교체 -->
+<div class="detail_visual_area">
+  <video autoplay muted loop playsinline preload="auto"
+         poster="/2026/assets/video/open2u_2023/open2u-hero-poster.jpg">
+    <source src="/2026/assets/video/open2u_2023/open2u-hero.mp4" type="video/mp4">
+  </video>
+</div>
+
+<style>
+/* 영상 자체가 흰 배경 + 고대비 타이포 구성이므로 기존 그라디언트 오버레이는 끄는 것을 권장 */
+.detail--open2u_2023 .detail_visual_area::before { background: none; }
+@media (prefers-reduced-motion: reduce) {
+  .detail--open2u_2023 .detail_visual_area video { display: none; }
+  .detail--open2u_2023 .detail_visual_area { background: #fff url(/2026/assets/video/open2u_2023/open2u-hero-poster.jpg) center/cover; }
+}
+</style>

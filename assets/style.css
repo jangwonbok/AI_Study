@@ -1,118 +1,307 @@
+/* 참고: gabrielbeaugonin.com/project/mcalpine — 밝은 회색 바탕, 왼쪽 고정 제목 패널, 오른쪽에 세로로 쌓인 크고 둥근 카드, 흰 아이콘 버튼 */
 :root{
-  --bg:#f6f6f3;
-  --surface:#ffffff;
-  --ink:#16171a;
-  --muted:#6b6e76;
-  --line:#e3e3de;
-  --accent:#3b5bfd;
-  --accent-soft:#e8ecff;
-  --font:"Pretendard","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;
-  --radius:14px;
+  --bg:#f4f4f4;
+  --card:#eaeaea;
+  --surface:#fff;
+  --ink:#1a1a1a;
+  --grey:#a3a3a3;
+  --muted:#6b6b6b;
+  --line:rgba(26,26,26,.1);
+  --wash:rgba(26,26,26,.05);
+  --sans:"Inter Tight","Pretendard","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;
+  --edge:clamp(20px,3.2vw,60px);
+  --edge-y:clamp(18px,3.4vh,40px);
+  --gap:clamp(10px,.95vw,18px);
+  --panel-w:50vw;
+  --radius:clamp(24px,3.4vw,64px);
+  --btn:clamp(46px,2.9vw,56px);
+  --ease:cubic-bezier(.23,1,.32,1);
+  --ease-io:cubic-bezier(.785,.135,.15,.86);
+  --press:cubic-bezier(.075,.82,.165,1);
   color-scheme:light;
-}
-@media (prefers-color-scheme:dark){
-  :root{
-    --bg:#111215;
-    --surface:#1a1b20;
-    --ink:#ececef;
-    --muted:#9a9ca5;
-    --line:#2a2c33;
-    --accent:#8ea2ff;
-    --accent-soft:#232a4d;
-    color-scheme:dark;
-  }
 }
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:84px}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.6;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
-a{color:var(--accent)}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit}
+::selection{background:var(--ink);color:#fff}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:4px}
+[hidden]{display:none !important}
+.skip-link{position:fixed;top:8px;left:8px;z-index:100;padding:8px 12px;background:var(--ink);color:#fff;font-size:12px;border-radius:8px;transform:translateY(-200%)}
+.skip-link:focus{transform:none}
 
-/* hero */
-.hero{padding:64px 0 36px;border-bottom:1px solid var(--line)}
-.eyebrow{margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--accent)}
-.hero h1{margin:0;font-size:clamp(28px,5vw,44px);line-height:1.2;letter-spacing:-.03em}
-.lead{margin:12px 0 0;color:var(--muted);font-size:17px}
-.stats{display:flex;gap:28px;margin:28px 0 0;flex-wrap:wrap}
-.stats div{display:flex;flex-direction:column-reverse}
-.stats dt{font-size:13px;color:var(--muted)}
-.stats dd{margin:0;font-size:24px;font-weight:700}
+/* Lenis 부드러운 스크롤 */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto !important}
+.lenis.lenis-stopped{overflow:hidden}
 
-/* toolbar */
-.toolbar{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.toolbar-inner{display:flex;gap:12px;align-items:center;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
-#search{flex:0 1 280px;min-width:0;width:100%;padding:9px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
-.chips{display:flex;gap:6px;flex-wrap:wrap}
-.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer}
-.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+/* ── 왼쪽 고정 패널 ───────────────────────────────── */
+.panel{position:fixed;inset:0 auto 0 0;z-index:20;width:var(--panel-w);display:grid;grid-template-rows:auto 1fr auto;padding:var(--edge-y) var(--edge);overflow-y:auto;scrollbar-width:none}
+.panel::-webkit-scrollbar{display:none}
 
-/* layout */
-.layout{display:grid;grid-template-columns:180px 1fr;gap:40px;padding-top:36px;padding-bottom:48px}
-.week-nav{position:sticky;top:84px;align-self:start}
-.nav-title{margin:0 0 8px;font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.08em}
-.week-nav ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
-.week-nav > ol{gap:20px}
-.week-nav .nav-year > ol{gap:10px}
-.week-nav a{display:flex;justify-content:space-between;gap:8px;padding:7px 10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:14px}
-.week-nav a:hover{background:var(--surface)}
-.week-nav a.is-current{background:var(--accent-soft);color:var(--accent);font-weight:600}
-.week-nav a.year-link{font-weight:800;font-size:15px}
-.week-nav a.month-link{font-weight:700;font-size:13px;color:var(--muted);padding-left:14px}
-.week-nav a.year-link.is-current,.week-nav a.month-link.is-current{background:none;color:var(--ink)}
-.week-nav .nav-month ol a{padding-left:24px}
-.week-nav .count{color:var(--muted);font-size:12px}
+.panel-top{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand{margin:0;font-size:15px;font-weight:500;line-height:1;letter-spacing:-.01em}
+.brand a{text-decoration:none}
+.site-nav{display:flex;align-items:center;gap:6px}
+.pill-link{display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:999px;background:var(--surface);font-size:13px;text-decoration:none;transition:scale .3s var(--press),background-color .3s var(--ease-io),color .3s var(--ease-io)}
+.pill-link:active{scale:.95}
 
-/* years */
-.weeks{display:flex;flex-direction:column;gap:88px;min-width:0}
-.year{display:flex;flex-direction:column;gap:56px}
-.year-head h2{margin:0;font-size:36px;letter-spacing:-.04em;line-height:1}
+.search-field{display:flex;align-items:center;gap:8px;width:170px;height:40px;padding:0 14px;border-radius:999px;background:var(--surface);cursor:text;transition:width .5s var(--ease),box-shadow .3s ease}
+.search-field:focus-within{width:250px;box-shadow:0 0 0 1.5px var(--ink)}
+.search-field svg{width:14px;height:14px;flex:none;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round}
+#search{flex:1;min-width:0;height:100%;padding:0;border:0;outline:0;background:none;color:var(--ink);font:13px var(--sans)}
+#search::placeholder{color:var(--muted)}
+#search::-webkit-search-cancel-button{cursor:pointer}
+.search-field kbd{font:11px var(--sans);color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:0 6px}
+.search-field:focus-within kbd{display:none}
 
-/* months */
-.month{display:flex;flex-direction:column;gap:40px}
-.month-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:12px;border-bottom:2px solid var(--ink)}
-.month-head h3{margin:0;font-size:26px;letter-spacing:-.03em}
-.month-head .meta{color:var(--muted);font-size:14px}
-.month-summary{margin:-24px 0 0;color:var(--muted)}
+/* 가운데: 연/월/주 선택 → 지금 보는 작업 제목(검정)·분류(회색) → 아이콘 버튼 */
+.panel-main{align-self:center;display:flex;flex-direction:column;gap:clamp(24px,4.2vh,64px);padding:clamp(32px,6vh,72px) var(--btn) clamp(32px,6vh,72px) clamp(0px,9vw,260px)}
 
-/* weeks */
-.week-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
-.week-head h4{margin:0;font-size:20px;letter-spacing:-.02em}
-.week-head .period{color:var(--muted);font-size:14px}
-.week-head .anchor{margin-left:auto;font-size:13px;color:var(--muted);text-decoration:none}
-.week-head .anchor:hover{color:var(--accent)}
-.week-summary{margin:0 0 18px;color:var(--muted)}
-.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+/* 연·월·주 커스텀 드롭다운: 흰 알약 버튼 → 아래로 펼쳐지는 흰 목록 카드
+   목록에서 작업이 있는 값은 진하게, 없는 값은 흐리게, 선택한 값은 검정 바탕 + 체크 */
+.periods{display:flex;flex-wrap:wrap;gap:6px}
+.dd{position:relative}
+.dd.is-open{z-index:30}
+.dd-trigger{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 12px 0 16px;border:0;border-radius:999px;background:var(--surface);color:var(--ink);font-size:13px;white-space:nowrap;cursor:pointer;transition:scale .3s var(--press),background-color .3s var(--ease-io),color .3s var(--ease-io)}
+.dd-trigger .lucide{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.5;transition:transform .45s var(--ease)}
+.dd-trigger:active{scale:.96}
+.dd.is-open .dd-trigger{background:var(--ink);color:#fff}
+.dd.is-open .dd-trigger .lucide{transform:rotate(180deg)}
+@media (hover:hover){.dd-trigger:hover{scale:1.03}}
 
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
-.card video{display:block;width:100%;aspect-ratio:16/9;background:#000;object-fit:contain}
-.card-body{padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
-.category{align-self:flex-start;font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-soft);padding:3px 9px;border-radius:999px}
-.card h5{margin:0;font-size:17px;line-height:1.4}
-.card p{margin:0;color:var(--muted);font-size:14px}
+.dd-list{position:absolute;top:calc(100% + 8px);left:0;z-index:1;display:grid;grid-template-columns:minmax(0,1fr);gap:2px;min-width:100%;width:max-content;max-height:min(320px,50svh);overflow:auto;margin:0;padding:6px;list-style:none;border-radius:20px;background:var(--surface);box-shadow:0 18px 48px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.04);opacity:0;visibility:hidden;transform:translateY(-6px) scale(.97);transform-origin:top left;transition:opacity .18s ease,transform .35s var(--ease),visibility 0s .35s;scrollbar-width:none}
+.dd-month .dd-list{grid-template-columns:repeat(4,minmax(0,1fr))}
+.dd.is-open .dd-list{opacity:1;visibility:visible;transform:none;transition:opacity .18s ease,transform .35s var(--ease),visibility 0s}
+.dd-option{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:64px;height:36px;padding:0 12px;border-radius:12px;color:var(--grey);font-size:13px;white-space:nowrap;cursor:pointer;outline:0;transition:background-color .2s ease,color .2s ease}
+.dd-month .dd-option{justify-content:center}
+.dd-option.has-works{color:var(--ink)}
+.dd-option:hover,.dd-option:focus{background:var(--wash);color:var(--ink)}
+.dd-option:focus-visible{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.dd-option[aria-selected="true"]{background:var(--ink);color:#fff}
+.dd-option .lucide{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.dd-month .dd-option .lucide{display:none}
+
+.headline{max-width:15em;font-size:clamp(26px,2.25vw,44px);font-weight:500;line-height:1.12;letter-spacing:-.028em;word-break:keep-all}
+.line{position:relative;margin:0;padding-bottom:.08em;overflow:hidden}
+.line-sub{color:var(--grey)}
+.line-text{display:block;animation:line-in 1s var(--ease) both}
+.line-sub .line-text{animation-delay:.07s; font-size: 12px; }
+.line-text.is-leaving{position:absolute;inset:0 0 auto;animation:line-out .55s var(--ease-io) both}
+@keyframes line-in{from{transform:translateY(110%)}}
+@keyframes line-out{to{transform:translateY(-110%)}}
+
+.actions{display:flex;align-items:center;gap:6px}
+/* 참고 사이트의 버튼 값: 올리면 1.037배, 누르면 .97배, 켜지면 검정 원형. --mx/--my는 커서를 따라 끌려간 거리(app.js 마그네틱) */
+.icon-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;width:var(--btn);height:var(--btn);padding:0;border:0;border-radius:calc(var(--btn) * .44);background:var(--surface);color:var(--ink);cursor:pointer;text-decoration:none;transform:translate(var(--mx,0px),var(--my,0px));will-change:transform;transition:scale .3s var(--press),border-radius .3s var(--ease-io),background-color .3s var(--ease-io),color .3s var(--ease-io),opacity .3s ease}
+.icon-btn[aria-expanded="true"]{background:var(--ink);color:#fff;border-radius:50%}
+.icon-btn[aria-disabled="true"],.icon-btn:disabled{opacity:.35;cursor:default;pointer-events:none}
+/* 아이콘은 두 벌을 겹쳐 두고, 올리면 위로 밀려나며 아래 것이 올라옴 */
+.ico{position:relative;display:block;width:16px;height:16px;overflow:hidden}
+.ico svg{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .55s var(--ease)}
+.ico .dot{fill:currentColor}
+.ico .lucide{stroke-width:2}
+.ico svg+svg{transform:translateY(140%)}
+@media (hover:hover){
+  .icon-btn:hover .ico:not(.ico-swap) svg:first-child{transform:translateY(-140%)}
+  .icon-btn:hover .ico:not(.ico-swap) svg+svg{transform:none}
+  .icon-btn:hover{scale:1.037}
+  .pill-link:hover{background:var(--ink);color:#fff}
+}
+.icon-btn:active{scale:.97}
+.counter{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+
+/* 아래: 소개 문장, 주차 요약, 분류 */
+.panel-bottom{display:flex;flex-direction:column;gap:8px}
+.intro-desc{margin:0;max-width:30em;font-size:15px;line-height:1.4;color:var(--ink);word-break:keep-all}
+.week-meta{margin:0;font-size:13px;line-height:1.45;color:var(--muted);word-break:keep-all}
+.result-count{margin:0;font-size:13px;color:var(--ink)}
+.week-meta:empty,.result-count:empty{display:none}
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-top:12px}
+.chips{display:flex;flex-wrap:wrap;gap:2px}
+.chip{padding:7px 14px;border:0;border-radius:999px;background:none;color:var(--muted);font-size:13px;line-height:1.2;cursor:pointer;white-space:nowrap;transition:background-color .3s var(--ease-io),color .3s var(--ease-io),scale .3s var(--press)}
+.chip:hover{color:var(--ink)}
+.chip:active{scale:.95}
+.chip[aria-pressed="true"]{background:var(--surface);color:var(--ink)}
+
+/* ── 오른쪽: 세로로 쌓이는 큰 카드 ─────────────────── */
+.stage{position:relative;z-index:10;margin-left:var(--panel-w);padding:var(--gap) var(--gap) var(--gap) 0;min-height:100svh}
+.works{display:flex;flex-direction:column;align-items:center;gap:var(--gap);transition:gap 1.2s var(--ease),padding 1.2s var(--ease)}
+.tile{position:relative;display:block;width:100%;aspect-ratio:1/1;max-height:calc(100svh - var(--gap) * 2);border-radius:var(--radius);color:var(--ink);text-decoration:none;cursor:pointer;-webkit-user-drag:none;transition:opacity 1.1s var(--ease) calc(var(--d,0) * 110ms),transform 1.4s var(--ease) calc(var(--d,0) * 110ms),width 1.2s var(--ease),border-radius 1.2s var(--ease)}
+/* 화면에 들어올 때 아래에서 살짝 커지며 떠오름 */
+.tile:not(.is-in){opacity:0;transform:translateY(90px) scale(.95)}
+.tile-frame{position:absolute;inset:0;overflow:hidden;border-radius:inherit;background:var(--card);isolation:isolate;transition:scale .9s var(--ease),opacity .7s ease}
+.tile:hover .tile-frame{scale:.985}
+.tile:focus-visible{outline-offset:4px;border-radius:var(--radius)}
+
+/* 스크롤마다 움직이는 층이라 미리 GPU 층으로 올려 둠 — 안 그러면 흐림 배경·영상을 매 프레임 다시 그려서 버벅임 */
+.media{--py:0%;position:absolute;inset:0;display:block;transform:translateY(var(--py)) scale(1.12);will-change:transform;backface-visibility:hidden;transition:scale 1.1s var(--ease)}
+.tile:hover .media{scale:1.04}
+.media video,.media>img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.media-text{display:flex;align-items:center;justify-content:center;padding:15%;font-size:clamp(24px,2.6vw,44px);font-weight:500;line-height:1.1;letter-spacing:-.03em;text-align:center;word-break:keep-all;color:var(--muted)}
+
+/* 웹 작업: 흐린 배경 위에 브라우저 창을 띄움 */
+.media-window{background:linear-gradient(160deg,#e9e9e9,#d9d9d9)}
+.media-window .backdrop{position:absolute;inset:-6%;width:112%;height:112%;object-fit:cover;filter:blur(36px) saturate(1.15);opacity:.9}
+.window{position:absolute;top:50%;left:50%;display:flex;flex-direction:column;width:78%;aspect-ratio:16/10.6;max-height:74%;overflow:hidden;border-radius:clamp(8px,.8vw,14px);background:#fff;box-shadow:0 30px 70px rgba(0,0,0,.18),0 4px 14px rgba(0,0,0,.06);transform:translate(-50%,-50%)}
+.window-bar{display:flex;align-items:center;gap:5px;flex:none;height:clamp(18px,1.5vw,26px);padding:0 10px;border-bottom:1px solid #f0f0f0}
+.window-bar i{width:7px;height:7px;border-radius:50%;background:#dcdcdc}
+.window-view{position:relative;flex:1;overflow:hidden}
+.window-view img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.page-preview iframe{position:absolute;top:0;left:0;width:400%;height:400%;border:0;transform:scale(.25);transform-origin:0 0;pointer-events:none;background:#fff}
+
+.tag{position:absolute;top:clamp(16px,1.8vw,30px);left:clamp(16px,1.8vw,30px);z-index:2;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.9);font-size:12px;line-height:1.2;color:var(--ink)}
+/* 데스크톱에선 제목을 왼쪽 패널이 보여 주므로 카드 안 제목은 휴대폰에서만 */
+.caption{display:none}
+
+/* ── 작게 보기: 카드가 가운데 작은 썸네일로 줄어듦 (참고 사이트의 홈 화면) ── */
+:root{--compact-w:min(24vw,46svh)}
+.is-compact .works{gap:16svh;padding-block:calc(50svh - var(--compact-w) / 2 - var(--gap))}
+.is-compact .tile{width:var(--compact-w);border-radius:calc(var(--compact-w) * .09)}
+.is-compact .tile:not(.is-active) .tile-frame{opacity:.16}
+.is-compact .tile-frame::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(0,0,0,.38),transparent 38%);pointer-events:none;animation:appear .8s ease both}
+.is-compact .caption{position:absolute;left:clamp(16px,1.9vw,40px);right:16px;bottom:clamp(16px,1.9vw,40px);z-index:3;display:block;color:#fff;pointer-events:none;animation:caption-in .9s var(--ease) .5s both}
+.is-compact .caption-num{display:none}
+.is-compact .caption-title{display:block;font-size:clamp(17px,1.15vw,22px);font-weight:500;line-height:1.2;letter-spacing:-.01em;word-break:keep-all}
+.is-compact .tile:not(.is-active) .caption{opacity:0}
+@keyframes caption-in{from{opacity:0;transform:translateY(10px)}}
+
+/* 카드 바로 왼쪽, 화면 세로 가운데의 축소/확대 버튼 */
+.size-btn{position:fixed;top:50%;left:calc(var(--panel-w) - var(--btn) - var(--gap) * 2.4);z-index:25;transform:translateY(calc(-50% + var(--fy,0px))) translate(var(--mx,0px),var(--my,0px));transition:scale .3s var(--press),border-radius .3s var(--ease-io),background-color .3s var(--ease-io),color .3s var(--ease-io),opacity .6s ease,translate 1s var(--ease)}
+.is-loading .size-btn{opacity:0;translate:150% 0;pointer-events:none}
+.is-entering .size-btn{transition-delay:0s,0s,0s,0s,.8s,.8s}
+/* 아이콘은 위아래로 밀려 바뀜: 크게일 땐 안쪽 화살표(축소), 작게일 땐 바깥 화살표(확대) */
+.ico-swap svg+svg{transform:translateY(140%)}
+.icon-btn[aria-pressed="true"] .ico-swap svg:first-child{transform:translateY(-140%)}
+.icon-btn[aria-pressed="true"] .ico-swap svg+svg{transform:none}
+/* 상세 화면에선 작게 보기 여부와 상관없이 축소 아이콘 = 목록으로 돌아가기 */
+.is-detail .size-btn .ico-swap svg:first-child{transform:none}
+.is-detail .size-btn .ico-swap svg+svg{transform:translateY(140%)}
+
+.dots{position:fixed;top:50%;right:clamp(12px,2.4vw,48px);z-index:15;display:flex;flex-direction:column;transform:translateY(-50%);opacity:0;pointer-events:none;transition:opacity .6s ease}
+.is-compact .dots{opacity:1;pointer-events:auto}
+.dot{display:grid;place-items:center;width:20px;height:16px;padding:0;border:0;background:none;cursor:pointer}
+.dot::before{content:"";width:3px;height:3px;border-radius:50%;background:var(--grey);transition:background-color .3s ease,scale .3s var(--press)}
+.dot:hover::before{background:var(--muted)}
+.dot[aria-current="true"]::before{background:var(--ink);scale:1.4}
+
+.empty{margin:0;padding:clamp(40px,30vh,320px) 0;font-size:clamp(20px,2vw,28px);letter-spacing:-.02em;text-align:center;color:var(--muted)}
+
+/* ── 상세 화면: 풀페이지 ─────────────────────────────── */
+/* 섹션마다 화면 하나를 꽉 채우고(스크롤이 멈추면 한 화면씩 맞춤),
+   왼쪽 패널은 화면 위에 겹쳐서 위엔 로고, 왼쪽 아래엔 작업 이름과 ⓘ·↗ 버튼만 남음 */
+.is-detail .works{display:none}
+.is-detail :is(.site-nav,.periods,.actions,.panel-bottom,.dots){display:none}
+.is-detail .stage{margin-left:0;padding:0}
+.detail-view{display:flex;flex-direction:column}
+.detail-actions{display:none;align-items:center;gap:6px}
+.is-detail .detail-actions{display:flex;animation:appear .6s ease .35s both}
+
+.is-detail .panel{position:fixed;inset:0;width:auto;z-index:30;overflow:hidden;color:#fff;pointer-events:none;transition:color .35s ease}
+.is-detail .panel :is(a,button){pointer-events:auto}
+.is-detail .panel-main{align-self:end;gap:clamp(20px,3.4vh,36px);padding:0}
+.is-detail .headline{max-width:min(18em,60vw)}
+.is-detail .line-sub{color:rgba(255,255,255,.72)}
+/* 정보가 켜지면 흰 화면이 되므로 글자도 다시 검정 */
+.is-detail.is-info .panel{color:var(--ink)}
+.is-detail.is-info .line-sub{color:var(--grey)}
+/* 흰 화면 위에서 흰 버튼이 묻히지 않게 */
+.is-detail.is-info :is(#open-link,.size-btn){background:var(--bg)}
+/* 축소(돌아가기) 버튼은 화면 오른쪽 끝에서 커서 높이를 따라감 */
+.is-detail .size-btn{left:auto;right:var(--edge)}
+
+.sec-card{position:relative;width:100%;height:100vh;height:100svh;overflow:hidden;background:var(--card);cursor:pointer;isolation:isolate;transition:background-color .35s ease}
+/* 아래쪽을 어둡게 깔아서 겹친 흰 제목이 읽히게 (정보가 켜지면 사라짐) */
+.sec-card::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0) 42%),linear-gradient(to bottom,rgba(0,0,0,.25),rgba(0,0,0,0) 18%);pointer-events:none;transition:opacity .35s ease}
+.is-info .sec-card::after{opacity:0}
+/* 첫 카드 뒤의 섹션은 아래에서 떠오름 (참고 사이트: 16rem 아래에서 1.2초) */
+.sec+.sec{animation:sec-rise 1.2s var(--ease) .3s both}
+@keyframes sec-rise{from{opacity:0;transform:translateY(16rem)}}
+.sec-media{position:absolute;inset:0;transition:opacity .35s cubic-bezier(.215,.61,.355,1)}
+.sec-media .media{transform:none}
+.media.live{background:#fff}
+.media.live iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
+/* 실제 페이지는 그 안을 바로 스크롤·클릭할 수 있게 어둡게 깔지 않음 */
+.sec-card:has(.live)::after{display:none}
+
+/* 정보 켜짐: 그림은 사라지고 흰 화면 위에 섹션 제목(왼쪽 위)·설명(오른쪽 아래)이 단어씩 떠오름
+   (왼쪽 아래는 작업 이름·버튼 자리라 비워 둠) */
+.is-info .sec-card{background:var(--surface)}
+.is-info .sec-media{opacity:0;pointer-events:none}
+.sec-info{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;gap:24px;padding:calc(var(--edge-y) + 64px) var(--edge) var(--edge-y);color:var(--ink);opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s .35s}
+.is-info .sec-info{opacity:1;visibility:visible;transition:opacity .35s ease .1s,visibility 0s}
+.sec-title{margin:0;font-size:clamp(22px,1.9vw,34px);font-weight:500;line-height:1.1;letter-spacing:-.025em}
+.sec-body{display:flex;flex-direction:column;gap:20px;align-self:flex-end;max-width:min(30em,46vw);cursor:auto}
+.sec-text{margin:0;max-width:28em;font-size:clamp(17px,1.4vw,26px);line-height:1.35;letter-spacing:-.015em;word-break:keep-all}
+.is-info .sec-info .word{animation:word-rise .8s var(--ease) both;animation-delay:calc(120ms + var(--i) * 26ms)}
+.is-info .sec-info :is(.tools,.links){animation:appear .6s ease .5s both}
+
+.info-btn[aria-pressed="true"]{background:var(--ink);color:#fff;border-radius:50%}
+
 .tools{display:flex;gap:6px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
-.tools li{font-size:12px;border:1px solid var(--line);border-radius:6px;padding:2px 7px;color:var(--muted)}
-.links{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
-.link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;text-decoration:none;padding:7px 12px;border-radius:8px;border:1px solid var(--line);color:var(--ink)}
-.link:hover{border-color:var(--accent);color:var(--accent)}
-.link .ico{font-size:12px;opacity:.8}
+.tools li{font-size:12px;border-radius:999px;padding:4px 10px;background:var(--bg);color:var(--muted)}
+.links{display:flex;gap:8px;flex-wrap:wrap}
+.link{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:999px;background:var(--ink);color:#fff;font-size:13px;text-decoration:none;transition:scale .3s var(--press),opacity .3s ease}
+.link:hover{opacity:.82}
+.link:active{scale:.96}
+.link .ico-text{font-size:10px;opacity:.7}
 
-.empty{padding:48px 0;text-align:center;color:var(--muted)}
-.footer{padding-bottom:40px;font-size:13px}
-.footer a{color:var(--muted)}
+/* ── 처음 열 때: 글꼴 준비 전엔 숨겼다가 소개 단어 → 제목 → 카드 순서로 ── */
+@keyframes word-rise{from{opacity:0;transform:translateY(.6em);filter:blur(6px)}}
+@keyframes appear{from{opacity:0}}
+.word{display:inline-block}
+.is-loading :is(.panel,.stage){opacity:0}
+.is-entering .word{animation:word-rise .9s var(--ease) both;animation-delay:calc(400ms + var(--i) * 45ms)}
+.is-entering :is(.panel-top,.periods,.actions,.controls,.week-meta){animation:appear .8s ease both;animation-delay:.7s}
 
-@media (max-width:760px){
-  .layout{grid-template-columns:1fr;gap:20px;padding-top:20px}
-  .week-nav{position:static}
-  .week-nav > ol{gap:8px}
-  .week-nav .nav-year,.week-nav .nav-month{display:flex;align-items:center;flex-wrap:wrap}
-  .week-nav .nav-year > ol,.week-nav .nav-month ol{flex-direction:row;flex-wrap:wrap;gap:4px}
-  .week-nav a.month-link,.week-nav .nav-month ol a{padding-left:10px}
-  .week-nav a{white-space:nowrap}
-  .year-head h2{font-size:28px}
-  .month-head h3{font-size:22px}
-  .items{grid-template-columns:1fr}
-  .hero{padding:40px 0 28px}
-  #search{flex:1 1 100%}
+/* 동작 줄이기 설정: 움직임 없이 나타나기만 함 */
+@media (prefers-reduced-motion:reduce){
+  .is-entering .word,.line-text{animation-name:appear}
+  .tile:not(.is-in){transform:none}
+  .media{transform:none}
+  *,*::before,*::after{transition-duration:.01ms !important}
+}
+
+/* ── 태블릿·휴대폰: 패널은 위로, 카드는 한 줄로, 버튼은 아래에 떠 있음 ── */
+@media (max-width:860px){
+  :root{--panel-w:0px;--edge:16px;--edge-y:16px;--gap:10px;--radius:clamp(22px,6vw,36px);--btn:46px}
+  .panel{position:relative;inset:auto;width:auto;display:flex;flex-direction:column;gap:28px;overflow:visible;padding:16px 16px 24px}
+  .panel-top{flex-wrap:wrap}
+  .search-field{width:130px}
+  .search-field:focus-within{width:min(220px,calc(100vw - 140px))}
+  .search-field kbd{display:none}
+  .panel-main{align-self:stretch;padding:24px 0 0;gap:18px}
+  .headline{font-size:clamp(26px,7vw,36px)}
+  /* 번호는 화면 아래 가운데에 떠 있는 작은 알약으로 */
+  .actions{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));z-index:40;height:40px;padding:0 16px;border-radius:999px;background:rgba(255,255,255,.94);box-shadow:0 12px 32px rgba(0,0,0,.1);transform:translateX(-50%)}
+  .actions:has(.counter:empty){display:none}
+  .dd-month .dd-list{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .stage{margin-left:0;padding:0 12px 110px}
+  .tile{aspect-ratio:4/5;max-height:none}
+  .tile-frame::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(0,0,0,.5),transparent 40%);pointer-events:none}
+  .caption{position:absolute;left:20px;right:20px;bottom:18px;z-index:3;display:flex;flex-direction:column;gap:4px;color:#fff;pointer-events:none}
+  .caption-num{font-size:12px;opacity:.8}
+  .caption-title{font-size:20px;font-weight:500;line-height:1.15;letter-spacing:-.02em;word-break:keep-all}
+  .window{width:84%}
+  /* 축소 버튼은 참고 사이트처럼 오른쪽 아래에 */
+  :root{--compact-w:64vw}
+  .size-btn{top:auto;bottom:max(22px,calc(env(safe-area-inset-bottom) + 6px));left:auto;right:16px;transform:none;box-shadow:0 10px 26px rgba(0,0,0,.1)}
+  .is-compact .works{gap:10svh}
+  .is-compact .caption-title{font-size:18px}
+  .dots{right:4px}
+  /* 상세 화면: ⓘ·↗ 버튼은 아래 가운데 알약으로, 카드는 세로형 */
+  .is-detail .detail-actions{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));z-index:40;padding:6px;border-radius:26px;background:rgba(255,255,255,.94);box-shadow:0 12px 32px rgba(0,0,0,.1);transform:translateX(-50%)}
+  .detail-actions .icon-btn{background:var(--bg)}
+  .detail-actions .info-btn[aria-pressed="true"]{background:var(--ink)}
+  /* 작업 이름은 아래 알약 버튼 위에 겹쳐 둠 */
+  .is-detail .panel{padding-bottom:calc(max(16px,env(safe-area-inset-bottom)) + 76px)}
+  .is-detail .panel-main{align-self:stretch;margin-top:auto}
+  .is-detail .headline{max-width:none;transition:opacity .3s ease}
+  /* 정보가 켜지면 설명이 그 자리를 쓰도록 이름은 잠시 숨김 */
+  .is-detail.is-info .headline{opacity:0}
+  .sec-info{padding:72px 20px calc(max(16px,env(safe-area-inset-bottom)) + 88px)}
+  .sec-body{align-self:stretch;max-width:none}
+  .sec-text{font-size:18px}
 }

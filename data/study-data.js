@@ -14,14 +14,17 @@
  *   period   : 기간 (선택)                                예) "2026.11.09 – 11.15"
  *   summary  : 이번 주 한 줄 요약 (선택)
  *   items    : 학습 항목 목록
- *   (화면 이름 "2주차"와 링크 ID "2026-11-w2"는 자동으로 만들어집니다)
+ *   (화면 이름 "Week 2"와 링크 ID "2026-11-w2"는 자동으로 만들어집니다)
  *
  * 학습 항목(item)
  *   title       : 항목 제목
- *   category    : 분류 (예: 웹 제작, 영상, 이미지, 프롬프트, 자동화 …)
+ *   category    : 분류 (예: Web, Video, Image, Prompt, Automation …)
  *   description : 설명
  *   tools       : 사용한 AI 도구 목록 (선택)
  *   video       : 카드에서 바로 재생할 영상 경로 (선택)
+ *   thumbnail   : 카드 상단에 보여줄 이미지 경로 (선택, 영상·웹페이지보다 우선)
+ *   preview     : 카드 상단에 미리보기로 띄울 웹페이지 경로 (선택)
+ *                 비워두면 type이 "demo"인 링크의 페이지를 자동으로 미리보기합니다.
  *   links       : 관련 링크 목록 (선택)
  *                 type: "demo"(결과물) | "video"(영상) | "doc"(문서/자료) | "external"(외부 사이트)
  *
@@ -29,8 +32,8 @@
  * 또는 https:// 로 시작하는 외부 주소를 쓰면 됩니다.
  */
 window.STUDY_DATA = {
-  title: "AI 스터디 아카이브",
-  description: "AI 스터디에서 매주 배우고 만든 것들을 연도·월·주차별로 정리합니다.",
+  title: "AI Study",
+  description: "Things I learn and make with AI, week by week.",
   repo: "https://github.com/jangwonbok/AI_Study",
 
   // 월 제목 옆에 붙일 한 줄 요약 (선택)  "연도-월": { summary: "..." }
@@ -44,26 +47,108 @@ window.STUDY_DATA = {
       month: 11,
       week: 1,
       period: "2026.11.02 – 11.08",
-      summary: "AI로 포트폴리오 웹사이트와 소개 영상을 만들어 봤습니다.",
+      summary: "Built a portfolio website, a project detail page and intro films with AI.",
       items: [
         {
-          title: "AI로 포트폴리오 웹사이트 만들기",
-          category: "웹 제작",
+          title: "Portfolio website built with AI",
+          category: "Web",
           description:
-            "AI에게 디자인 방향과 콘텐츠를 설명해 한 화면 슬라이드형 포트폴리오 사이트(뮤플러스1호)를 만들었습니다. 프로젝트별 소개 영상도 함께 넣었습니다.",
+            "Described the design direction and content to AI and built a one-screen, slide-style portfolio site (Muplus1), with an intro film for each project.",
           tools: [],
+          thumbnail: "2026/11/week1/Main/portfolio/thumb.jpg",
           links: [
-            { label: "결과물 보기", url: "2026/11/week1/Main/portfolio/index.html", type: "demo" }
+            { label: "View site", url: "2026/11/week1/Main/portfolio/index.html", type: "demo" }
           ]
         },
         {
-          title: "AI 영상 제작 – 마이케어 소개 영상",
-          category: "영상",
-          description: "서비스(마이케어)를 소개하는 짧은 영상을 AI로 만들었습니다.",
+          title: "Open2U detail page",
+          category: "Detail",
+          description:
+            "A project detail page for SK telecom's Open2U purchase contract system, built with AI — hero, overview and key screens.",
+          tools: [],
+          links: [
+            { label: "View page", url: "2026/11/week1/Detail/open2u-works-detail.html", type: "demo" }
+          ]
+        },
+        {
+          title: "Open2U hero",
+          category: "Video",
+          description: "The hero film for the Open2U detail page, made with AI.",
+          tools: [],
+          video: "2026/11/week1/Video/open2u-hero.mp4",
+          links: [
+            { label: "Open video", url: "2026/11/week1/Video/open2u-hero.mp4", type: "video" },
+            { label: "Embed snippet", url: "2026/11/week1/Video/open2u-visual-snippet.html", type: "doc" }
+          ]
+        },
+        {
+          title: "GS Caltex hero",
+          category: "Video",
+          description: "The main hero film for GS Caltex, made with AI.",
+          tools: [],
+          video: "2026/11/week1/Video/gs-caltex-hero.mp4",
+          links: [
+            { label: "Open video", url: "2026/11/week1/Video/gs-caltex-hero.mp4", type: "video" }
+          ]
+        },
+        {
+          title: "MyCare intro",
+          category: "Video",
+          description: "A short film introducing the MyCare service, made with AI.",
           tools: [],
           video: "2026/11/week1/Video/vdo_works_kt_mycare_912.mp4",
           links: [
-            { label: "영상 파일 열기", url: "2026/11/week1/Video/vdo_works_kt_mycare_912.mp4", type: "video" }
+            { label: "Open video", url: "2026/11/week1/Video/vdo_works_kt_mycare_912.mp4", type: "video" }
+          ]
+        },
+        {
+          title: "GS Caltex intro",
+          category: "Video",
+          description: "A short film introducing GS Caltex, made with AI.",
+          tools: [],
+          video: "2026/11/week1/Video/vdo_works_gscaltex_912.mp4",
+          links: [
+            { label: "Open video", url: "2026/11/week1/Video/vdo_works_gscaltex_912.mp4", type: "video" }
+          ]
+        },
+        {
+          title: "Catch On cinematic",
+          category: "Video",
+          description: "A cinematic film for Catch On, made with AI.",
+          tools: [],
+          video: "2026/11/week1/Video/catchon_cinematic_1920x1080.mp4",
+          links: [
+            { label: "Open video", url: "2026/11/week1/Video/catchon_cinematic_1920x1080.mp4", type: "video" }
+          ]
+        },
+        {
+          title: "Catch On hero",
+          category: "Video",
+          description: "The main hero film for Catch On, made with AI.",
+          tools: [],
+          video: "2026/11/week1/Video/catchon_hero_1920x1080.mp4",
+          links: [
+            { label: "Open video", url: "2026/11/week1/Video/catchon_hero_1920x1080.mp4", type: "video" }
+          ]
+        },
+        {
+          title: "Chainz hero",
+          category: "Video",
+          description: "The main hero film for Chainz, made with AI.",
+          tools: [],
+          video: "2026/11/week1/Video/chainz_hero_1920x1080.mp4",
+          links: [
+            { label: "Open video", url: "2026/11/week1/Video/chainz_hero_1920x1080.mp4", type: "video" }
+          ]
+        },
+        {
+          title: "KT Communis hero",
+          category: "Video",
+          description: "The main hero film for KT Communis, made with AI.",
+          tools: [],
+          video: "2026/11/week1/Video/kt_communis_hero_1920x1080_1.mp4",
+          links: [
+            { label: "Open video", url: "2026/11/week1/Video/kt_communis_hero_1920x1080_1.mp4", type: "video" }
           ]
         }
       ]

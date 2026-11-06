@@ -196,8 +196,6 @@ html.lenis,html.lenis body{height:auto}
 .is-detail :is(.site-nav,.periods,.actions,.panel-bottom,.dots){display:none}
 .is-detail .stage{margin-left:0;padding:0}
 .detail-view{display:flex;flex-direction:column}
-.detail-actions{display:none;align-items:center;gap:6px}
-.is-detail .detail-actions{display:flex;animation:appear .6s ease .35s both}
 
 .is-detail .panel{position:fixed;inset:0;width:auto;z-index:30;overflow:hidden;color:#fff;pointer-events:none;transition:color .35s ease}
 .is-detail .panel :is(a,button){pointer-events:auto}
@@ -208,7 +206,7 @@ html.lenis,html.lenis body{height:auto}
 .is-detail.is-info .panel{color:var(--ink)}
 .is-detail.is-info .line-sub{color:var(--grey)}
 /* 흰 화면 위에서 흰 버튼이 묻히지 않게 */
-.is-detail.is-info :is(#open-link,.size-btn){background:var(--bg)}
+.is-detail.is-info .size-btn{background:var(--bg)}
 /* 축소(돌아가기) 버튼은 화면 오른쪽 끝에서 커서 높이를 따라감 */
 .is-detail .size-btn{left:auto;right:var(--edge)}
 
@@ -240,8 +238,6 @@ html.lenis,html.lenis body{height:auto}
 .sec-text{margin:0;max-width:28em;font-size:clamp(17px,1.4vw,26px);line-height:1.35;letter-spacing:-.015em;word-break:keep-all}
 .is-info .sec-info .word{animation:word-rise .8s var(--ease) both;animation-delay:calc(120ms + var(--i) * 26ms)}
 .is-info .sec-info :is(.tools,.links){animation:appear .6s ease .5s both}
-
-.info-btn[aria-pressed="true"]{background:var(--ink);color:#fff;border-radius:50%}
 
 .tools{display:flex;gap:6px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
 .tools li{font-size:12px;border-radius:999px;padding:4px 10px;background:var(--bg);color:var(--muted)}
@@ -294,12 +290,7 @@ html.lenis,html.lenis body{height:auto}
   .is-compact .works{gap:10svh}
   .is-compact .caption-title{font-size:18px}
   .dots{right:4px}
-  /* 상세 화면: ⓘ·↗ 버튼은 아래 가운데 알약으로, 카드는 세로형 */
-  .is-detail .detail-actions{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));z-index:40;padding:6px;border-radius:26px;background:rgba(255,255,255,.94);box-shadow:0 12px 32px rgba(0,0,0,.1);transform:translateX(-50%)}
-  .detail-actions .icon-btn{background:var(--bg)}
-  .detail-actions .info-btn[aria-pressed="true"]{background:var(--ink)}
-  /* 작업 이름은 아래 알약 버튼 위에 겹쳐 둠 */
-  .is-detail .panel{padding-bottom:calc(max(16px,env(safe-area-inset-bottom)) + 76px)}
+  .is-detail .panel{padding-bottom:max(16px,env(safe-area-inset-bottom))}
   .is-detail .panel-main{align-self:stretch;margin-top:auto}
   .is-detail .headline{max-width:none;transition:opacity .3s ease}
   /* 정보가 켜지면 설명이 그 자리를 쓰도록 이름은 잠시 숨김 */

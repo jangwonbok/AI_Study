@@ -206,11 +206,9 @@
 
   // ── 상세 화면 (참고 사이트의 프로젝트 페이지) ─────────────────
   // 누른 카드가 오른쪽 맨 위 큰 카드로 커지고(FLIP), 왼쪽 제목이 작업 이름으로 바뀜.
-  // ⓘ(또는 카드 클릭)를 누르면 카드 속 그림이 사라지고 흰 바탕에 제목·설명이 떠오름.
+  // 카드를 누르면 카드 속 그림이 사라지고 흰 바탕에 제목·설명이 떠오름.
   // 축소 버튼(또는 Esc·브라우저 뒤로)으로 돌아가면 큰 카드가 목록 속 원래 자리로 줄어듦
   const view = $("#detail-view");
-  const infoBtn = $("#info-toggle");
-  const linkBtn = $("#open-link");
   const detailState = { open: false, entry: null, index: -1, returnY: 0, pushed: false };
 
   // first(처음 자리) → 지금 자리로 1.1초 동안 옮겨 오는 애니메이션
@@ -281,10 +279,7 @@
 
   function setDetailInfo(on) {
     document.body.classList.toggle("is-info", on);
-    infoBtn.setAttribute("aria-pressed", String(on));
-    infoBtn.setAttribute("aria-label", on ? "Hide work info" : "Show work info");
   }
-  infoBtn.addEventListener("click", () => setDetailInfo(!document.body.classList.contains("is-info")));
 
   function showDetailHeadline() {
     const { item, week } = detailState.entry;
@@ -315,12 +310,6 @@
     if (!instant) flip(view.querySelector(".sec-card"), first, firstRadius);
 
     showDetailHeadline();
-    const link = (e.item.links || []).find((l) => l.type === "demo") || (e.item.links || [])[0];
-    if (link) {
-      linkBtn.href = toHref(link.url);
-      linkBtn.setAttribute("aria-label", `${link.label || "Open"} — ${e.item.title}`);
-      linkBtn.hidden = false;
-    } else linkBtn.hidden = true;
     sizeBtn.setAttribute("aria-label", "Back to list");
 
     const hash = `#${idOf(sel.year, sel.month, sel.week)}/${e.num}`;

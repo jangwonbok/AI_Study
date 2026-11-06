@@ -65,6 +65,24 @@ window.STUDY_DATA = {
           ]
         },
         {
+          title: "Monitoring & Insights dashboard",
+          category: "Web",
+          description: "A monitoring and insights dashboard page, built with AI.",
+          tools: [],
+          links: [
+            { label: "View page", url: "2026/11/week1/Main/index.html", type: "demo" }
+          ]
+        },
+        {
+          title: "Plurals workspace dashboard",
+          category: "Web",
+          description: "A workspace dashboard page for Plurals, built with AI.",
+          tools: [],
+          links: [
+            { label: "View page", url: "2026/11/week1/Main/plurals_dashboard.html", type: "demo" }
+          ]
+        },
+        {
           title: "Open2U detail page",
           category: "Detail",
           description:

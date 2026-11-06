@@ -13,6 +13,8 @@ AI 스터디에서 매주 배우고 만든 것들을 연도 · 월 · 주차별�
 | 주차 | 학습 항목 | 자료 |
 | --- | --- | --- |
 | 1주차 | AI로 포트폴리오 웹사이트 만들기 | [결과물](2026/11/week1/Main/portfolio/index.html) |
+| 1주차 | AI 대시보드 – Monitoring & Insights | [결과물](2026/11/week1/Main/index.html) |
+| 1주차 | AI 대시보드 – Plurals 워크스페이스 | [결과물](2026/11/week1/Main/plurals_dashboard.html) |
 | 1주차 | AI 상세페이지 – Open2U | [결과물](2026/11/week1/Detail/open2u-works-detail.html) |
 | 1주차 | AI 상세페이지 – KT 커뮤니스 | [결과물](2026/11/week1/Detail/kt-communis-detail.html) |
 | 1주차 | AI 상세페이지 – KT 마이케어 | [결과물](2026/11/week1/Detail/kt-mycare-detail.html) |

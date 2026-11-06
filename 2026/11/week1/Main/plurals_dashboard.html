@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plurals Workspace Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#E9EAF0;font-family:'Outfit',sans-serif;color:#1E2134;-webkit-font-smoothing:antialiased}
+.page{position:relative;width:1445px;height:960px;overflow:hidden;background:#F8F9FC;margin:0 auto}
+.abs{position:absolute}
+.av{overflow:hidden;flex:none;background:#ddd}
+.av svg{display:block}
+/* sidebar */
+.side{position:absolute;left:0;top:0;width:240px;height:960px;background:linear-gradient(180deg,#5B3ED2 0%,#5236C8 55%,#4A2FBE 100%)}
+.brand{position:absolute;left:28px;top:31px;display:flex;align-items:center;gap:10px;color:#fff;font-size:27px;font-weight:600;letter-spacing:-.3px}
+.collapse{position:absolute;left:223px;top:54px;width:33px;height:33px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(40,30,90,.18);display:flex;align-items:center;justify-content:center;z-index:5}
+.menu-l{position:absolute;left:31px;top:127px;color:rgba(255,255,255,.75);font-size:15px}
+.nav{position:absolute;left:0;width:240px;height:52px;display:flex;align-items:center;padding-left:32px;color:#fff;font-size:15px}
+.nav.active{background:rgba(255,255,255,.1)}
+.nav.active::before{content:"";position:absolute;left:0;top:0;width:4px;height:52px;background:#fff;border-radius:0 3px 3px 0}
+.nic{width:20px;height:20px;display:flex}
+.nl{margin-left:11px;opacity:.95}
+.badge{margin-left:12px;min-width:24px;height:20px;border-radius:10px;background:rgba(255,255,255,.88);color:#4B33BF;font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;padding:0 6px}
+.sdiv{position:absolute;left:33px;width:172px;height:1px;background:rgba(255,255,255,.28)}
+.up{position:absolute;left:16px;top:745px;width:214px;height:202px;border-radius:12px;background:#4428AE}
+.up h3{position:absolute;left:16px;top:16px;color:#fff;font-size:26px;font-weight:500;line-height:31px;letter-spacing:-.2px}
+.up p{position:absolute;left:16px;top:88px;color:rgba(255,255,255,.85);font-size:14px;line-height:18px;width:150px}
+.up .btn{position:absolute;left:16px;top:146px;width:175px;height:39px;border-radius:3px;background:#5FD6F3;color:#1E2134;font-size:14px;font-weight:500;display:flex;align-items:center;justify-content:center}
+.lock{position:absolute;left:158px;top:-25px}
+/* top bar */
+.top{position:absolute;left:240px;top:0;width:1205px;height:70px;background:#fff;border-bottom:1px solid #EDEEF3}
+.ws{position:absolute;left:31px;top:20px;font-size:21px;font-weight:500;color:#1E2134}
+.vdiv{position:absolute;width:1px;background:#E3E4EB}
+.tab{position:absolute;top:15px;height:40px;display:flex;align-items:center;font-size:15px}
+.tab.on{left:184px;width:72px;justify-content:center;background:#F2F3F7;border-radius:6px;color:#2A2D3E}
+.tab.off{left:278px;color:#8A8FA3}
+.topic{position:absolute;top:23px;display:flex}
+.dot{position:absolute;border-radius:50%;background:#F0453A}
+.uname{position:absolute;left:1051px;top:23px;font-size:17px;font-weight:500}
+/* header */
+.h1{position:absolute;left:270px;top:95px;font-size:26px;font-weight:500;color:#1E2134;letter-spacing:-.2px}
+.desc{position:absolute;left:270px;top:136px;width:520px;font-size:14.5px;line-height:22px;color:#6E7286;font-weight:300}
+.mem-l{position:absolute;left:1117px;top:104px;font-size:16px;font-weight:500}
+.mem{position:absolute;top:137px}
+.mem .av{border:2px solid #fff;box-shadow:0 0 0 1px #DADCE6}
+.plus4{position:absolute;left:1262px;top:145px;font-size:15px;color:#3A3D4E}
+.invite{position:absolute;left:1309px;top:135px;width:102px;height:39px;background:#141418;border-radius:5px;color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;gap:7px}
+/* middle */
+.mid{position:absolute;left:240px;top:210px;width:1205px;height:440px;background:#fff}
+.lbl{position:absolute;font-size:17px;font-weight:500;color:#1E2134}
+.dd{position:absolute;top:240px;height:36px;border:1px solid #E7E8EE;border-radius:4px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px 0 15px;font-size:15px;color:#2A2D3E}
+.img{position:absolute;left:262px;top:315px;width:359px;height:183px;border-radius:10px;background:#A595E8;overflow:hidden}
+.files{position:absolute;left:310px;top:513px;font-size:21px;font-weight:500;color:#1E2134}
+.files span{color:#9EA2B3;font-weight:300}
+.meta{position:absolute;top:579px;font-size:12px;color:#8A8FA3;display:flex;align-items:center;gap:8px}
+.mini{position:absolute;display:flex}
+.mini .av{border:1.5px solid #fff;margin-left:-5px}
+.mini .av:first-child{margin-left:0}
+.tiny-l{position:absolute;font-size:13px;color:#9A9EB0}
+.big{position:absolute;font-size:33px;font-weight:500;color:#1E2134;letter-spacing:-.5px}
+.hr{position:absolute;height:1px;background:#EEEFF3}
+.legend{position:absolute;top:473px;font-size:12px;color:#8A8FA3;line-height:15px}
+.legend b{display:block;font-weight:400;color:#2A2D3E;margin-left:17px}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:8px;vertical-align:-1px}
+.chart{position:absolute;left:649px;top:505px}
+.weekly{position:absolute;left:911px;top:438px;color:#3D7BF2;font-size:15px;display:flex;align-items:center;gap:6px}
+.ta{position:absolute;left:1018px;top:353px;width:387px;height:94px;border-radius:6px;background:#F3F4F8;padding:13px 20px;font-size:14px;color:#3A3D4E}
+.ta .cur{display:inline-block;width:1.5px;height:17px;background:#2A2D3E;vertical-align:-3px;margin-left:1px}
+.emo{position:absolute;top:468px;font-size:22px;line-height:26px;width:26px;text-align:center}
+.chip{position:absolute;top:567px;height:30px;border-radius:15px;display:flex;align-items:center;gap:8px;padding:0 9px 0 4px;font-size:14px;color:#8A8FA3}
+.chip .av{border:1.5px solid #fff}
+.addc{position:absolute;left:1254px;top:569px;width:26px;height:26px;border-radius:50%;background:#F3F4F8;display:flex;align-items:center;justify-content:center}
+.grip{position:absolute;width:5px;height:5px;border-radius:50%;background:#B7BBC8}
+.expand{position:absolute;left:825px;top:635px;width:32px;height:32px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(30,33,52,.1);display:flex;align-items:center;justify-content:center}
+/* bottom */
+.res{position:absolute;left:275px;top:732px;font-size:13px;color:#9A9EB0}
+.dashc{position:absolute;left:863px;top:693px;width:30px;height:30px;border-radius:50%;border:1.5px dashed #6C9CF5;display:flex;align-items:center;justify-content:center}
+.row{position:absolute;left:270px;width:715px;height:88px;background:#FCFCFE;border-radius:8px;box-shadow:0 1px 2px rgba(30,33,52,.02)}
+.lg{position:absolute;left:23px;top:16px;width:56px;height:56px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px #ECEDF2;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:700;color:#4A4E63}
+.rdiv{position:absolute;left:89px;top:22px;width:1px;height:44px;background:#E3E4EB}
+.rt{position:absolute;left:110px;top:19px;font-size:19px;font-weight:400;color:#1E2134}
+.rc{position:absolute;left:110px;top:49px;font-size:15px;color:#9A9EB0;font-weight:300}
+.rc span{color:#2F6FEB;font-weight:400}
+.st{position:absolute;left:333px;top:33px;display:flex;align-items:center;gap:13px;font-size:15px;color:#9A9EB0;font-weight:300}
+.ok{width:24px;height:24px;border-radius:50%;background:#4CC77E;display:flex;align-items:center;justify-content:center}
+.asg{position:absolute;left:563px;top:33px;font-size:15px;color:#9A9EB0;font-weight:300}
+.ring{position:absolute;left:645px;top:20px;width:48px;height:48px;border-radius:50%;border:2px solid #3D7BF2;padding:2px;background:#fff}
+.srow{position:absolute;left:1018px;width:387px;height:86px;background:#FCFCFE;border-radius:8px}
+.sd{position:absolute;left:25px;top:14px;width:56px;text-align:center}
+.sd b{display:block;font-size:24px;font-weight:500;color:#1E2134;line-height:30px}
+.sd span{display:block;font-size:13px;color:#6E7286;margin-top:6px;font-weight:300}
+.sdv{position:absolute;left:100px;top:15px;width:1px;height:56px;background:#E3E4EB}
+.stt{position:absolute;left:112px;top:19px;font-size:16px;color:#1E2134}
+.sts{position:absolute;left:112px;top:47px;font-size:13px;color:#8A8FA3;font-weight:300}
+</style></head>
+<body>
+<div class="page" id="plurals-dashboard">
+
+ <!-- Sidebar -->
+ <aside class="side">
+  <div class="brand"><svg width="27" height="27" viewBox="0 0 24 24"><path fill="#fff" d="M12 1.8l2.1 3.2 3.7-.9.2 3.8 3.4 1.7-2 3.2 2 3.2-3.4 1.7-.2 3.8-3.7-.9L12 22.2 9.9 19l-3.7.9-.2-3.8-3.4-1.7 2-3.2-2-3.2 3.4-1.7.2-3.8 3.7.9z"/><circle cx="12" cy="12" r="4" fill="#5A3DCD"/></svg><span>Plurals</span></div>
+  <div class="menu-l">Menu</div>
+  <div class="nav active" style="top:162px"><span class="nic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M7 15l3-4 3 3 4-5"/></svg></span><span class="nl">Dashboard</span></div><div class="nav" style="top:214px"><span class="nic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v9h9"/></svg></span><span class="nl">Analytics</span></div><div class="nav" style="top:266px"><span class="nic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><span class="nl">Project</span></div><div class="nav" style="top:318px"><span class="nic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="3"/><path d="M9 3h6v3H9zM9 11h6M9 15h6"/></svg></span><span class="nl">Task list</span><span class="badge">12</span></div><div class="nav" style="top:370px"><span class="nic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4M7 14h2M11 14h2M15 14h2M7 17h2M11 17h2"/></svg></span><span class="nl">Schedule</span></div><div class="nav" style="top:455px"><span class="nic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span><span class="nl">Setting</span></div><div class="nav" style="top:507px"><span class="nic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="16" rx="4"/><path d="M8 19l-2 3M12 7v5M12 15h.01"/></svg></span><span class="nl">Support</span></div><div class="nav" style="top:591px"><span class="nic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></span><span class="nl">Logout</span></div>
+  <div class="sdiv" style="top:438px"></div>
+  <div class="sdiv" style="top:575px"></div>
+  <div class="up">
+   <svg width="74" height="92" viewBox="0 0 74 92" class="lock">
+<defs>
+ <linearGradient id="lb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4C3B78"/><stop offset="1" stop-color="#1C1430"/></linearGradient>
+ <linearGradient id="ls" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5E4A8C"/><stop offset=".5" stop-color="#2C2147"/><stop offset="1" stop-color="#4A3970"/></linearGradient>
+</defs>
+<path d="M17 44 V24 a20 20 0 0 1 40 0 V44" fill="none" stroke="url(#ls)" stroke-width="9" stroke-linecap="round"/>
+<rect x="4" y="40" width="66" height="50" rx="12" fill="url(#lb)"/>
+<rect x="8" y="44" width="58" height="8" rx="4" fill="#fff" opacity=".08"/>
+<circle cx="37" cy="62" r="6" fill="#0F0A1C"/><rect x="34.5" y="64" width="5" height="12" rx="2.5" fill="#0F0A1C"/>
+</svg>
+   <h3>Upgrade to<br>Premium</h3>
+   <p>Go Pro to unlock all features</p>
+   <div class="btn">Upgrade now!</div>
+  </div>
+ </aside>
+ <div class="collapse"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E2134" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+
+ <!-- Top bar -->
+ <header class="top">
+  <div class="ws">Workspace</div>
+  <div class="vdiv" style="left:162px;top:20px;height:30px"></div>
+  <div class="tab on">Tasks</div>
+  <div class="tab off">Document</div>
+  <div class="topic" style="left:892px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3A3D4E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+  <div class="topic" style="left:935px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3A3D4E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+  <div class="dot" style="left:950px;top:21px;width:7px;height:7px"></div>
+  <div class="vdiv" style="left:978px;top:20px;height:30px"></div>
+  <div class="abs" style="left:998px;top:14px"><div class="av" style="width:41px;height:41px;border-radius:50%;"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" fill="#FFB65C"/><path d="M5 40 Q6 29 20 28 Q34 29 35 40Z" fill="#F07C2C"/><rect x="17" y="22" width="6" height="7" fill="#F0B38B"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#F0B38B"/><path d="M11 17 Q11 7 20 7 Q29 7 29 17 Q27 12 20 12 Q13 12 11 17Z" fill="#3A2418"/></svg></div></div>
+  <div class="uname">AR Shakir</div>
+  <div class="topic" style="left:1150px;top:24px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3A3D4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+ </header>
+
+ <!-- Project header -->
+ <h1 class="h1">ARS - Design Team</h1>
+ <p class="desc">This project will be create awesome product. Will running around 6 months with superfast pace working but touch with awesome visual</p>
+ <div class="mem-l">Members</div>
+ <div class="mem" style="left:1119px"><div class="av" style="width:36px;height:36px;border-radius:6px;"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" fill="#5E6B9C"/><path d="M5 40 Q6 29 20 28 Q34 29 35 40Z" fill="#2E3248"/><rect x="17" y="22" width="6" height="7" fill="#E3B08E"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#E3B08E"/><path d="M11 17 Q11 7 20 7 Q29 7 29 17 Q27 12 20 12 Q13 12 11 17Z" fill="#2A211C"/></svg></div></div>
+ <div class="mem" style="left:1153px"><div class="av" style="width:36px;height:36px;border-radius:6px;"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" fill="#6E7DB0"/><path d="M5 40 Q6 29 20 28 Q34 29 35 40Z" fill="#2F3A5C"/><rect x="17" y="22" width="6" height="7" fill="#EEC2A0"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#EEC2A0"/><path d="M11 17 Q11 7 20 7 Q29 7 29 17 Q27 12 20 12 Q13 12 11 17Z" fill="#3B2B22"/></svg></div></div>
+ <div class="mem" style="left:1187px"><div class="av" style="width:36px;height:36px;border-radius:6px;"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" fill="#5A6795"/><path d="M5 40 Q6 29 20 28 Q34 29 35 40Z" fill="#3A3F57"/><rect x="17" y="22" width="6" height="7" fill="#E6B593"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#E6B593"/></svg></div></div>
+ <div class="mem" style="left:1221px"><div class="av" style="width:36px;height:36px;border-radius:6px;"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" fill="#6A75A6"/><path d="M5 40 Q6 29 20 28 Q34 29 35 40Z" fill="#26283A"/><rect x="17" y="22" width="6" height="7" fill="#F0C9AD"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#F0C9AD"/><path d="M10 30 Q8 8 20 7 Q32 8 30 30 L27 30 Q28 14 20 13 Q12 14 13 30Z" fill="#2B201B"/></svg></div></div>
+ <div class="plus4">+4</div>
+ <div class="invite"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg><span>Invite</span></div>
+
+ <!-- Middle band -->
+ <section class="mid"></section>
+
+ <!-- Col 1 -->
+ <div class="abs" style="left:262px;top:241px"><div class="av" style="width:36px;height:36px;border-radius:50%;"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" fill="#F1ECF6"/><path d="M5 40 Q6 29 20 28 Q34 29 35 40Z" fill="#E8E2F0"/><rect x="17" y="22" width="6" height="7" fill="#E8B898"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#E8B898"/><path d="M10 30 Q8 8 20 7 Q32 8 30 30 L27 30 Q28 14 20 13 Q12 14 13 30Z" fill="#22191A"/></svg></div></div>
+ <div class="lbl" style="left:310px;top:247px">Natalia</div>
+ <div class="dd" style="left:524px;width:96px"><span>Today</span><svg width="10" height="6" viewBox="0 0 10 6"><path d="M0 0h10L5 6z" fill="#3A3D4E"/></svg></div>
+ <div class="img"><svg width="359" height="183" viewBox="0 0 359 183">
+<defs>
+ <linearGradient id="sk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FCD9C2"/><stop offset=".6" stop-color="#F3B596"/><stop offset="1" stop-color="#E2906F"/></linearGradient>
+ <linearGradient id="sl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6A45D8"/><stop offset=".5" stop-color="#8460EC"/><stop offset="1" stop-color="#5B38C9"/></linearGradient>
+</defs>
+<g transform="rotate(-6 180 120)">
+ <rect x="130" y="4" width="25" height="104" rx="12.5" fill="url(#sk)"/>
+ <rect x="156" y="24" width="24" height="88" rx="12" fill="url(#sk)"/>
+ <ellipse cx="174" cy="112" rx="40" ry="30" fill="url(#sk)"/>
+ <circle cx="214" cy="80" r="22" fill="none" stroke="url(#sk)" stroke-width="17"/>
+ <path d="M204 104 Q196 92 206 74" stroke="#E79C7C" stroke-width="2" fill="none" opacity=".5"/>
+ <ellipse cx="139" cy="14" rx="7" ry="5" fill="#FFE6D6" opacity=".7"/>
+ <ellipse cx="165" cy="33" rx="6" ry="4.5" fill="#FFE6D6" opacity=".7"/>
+</g>
+<rect x="138" y="132" width="82" height="60" rx="8" fill="url(#sl)"/>
+<rect x="136" y="128" width="86" height="16" rx="7" fill="#9373F2"/>
+<path d="M150 150 v40 M178 150 v40 M206 150 v40" stroke="#5C36C6" stroke-width="2" opacity=".55"/>
+</svg></div>
+ <div class="abs" style="left:262px;top:518px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7B5BE6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8"/></svg></div>
+ <div class="files">4 files<span>.svg</span></div>
+ <div class="meta" style="left:262px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3D7BF2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.5 8.5 0 1 1 21 11.5z"/></svg><span style="margin-left:4px">12 comments</span></div>
+ <div class="mini" style="left:400px;top:577px"><div class="av" style="width:18px;height:18px;border-radius:50%;"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" fill="#F3E2D8"/><path d="M5 40 Q6 29 20 28 Q34 29 35 40Z" fill="#E14B3B"/><rect x="17" y="22" width="6" height="7" fill="#E5B08C"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#E5B08C"/><path d="M11 17 Q11 7 20 7 Q29 7 29 17 Q27 12 20 12 Q13 12 11 17Z" fill="#3B2418"/></svg></div><div class="av" style="width:18px;height:18px;border-radius:50%;"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" fill="#FBE6D6"/><path d="M5 40 Q6 29 20 28 Q34 29 35 40Z" fill="#4A6BD8"/><rect x="17" y="22" width="6" height="7" fill="#F2C8A8"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#F2C8A8"/><path d="M10 30 Q8 8 20 7 Q32 8 30 30 L27 30 Q28 14 20 13 Q12 14 13 30Z" fill="#C8662C"/></svg></div><div class="av" style="width:18px;height:18px;border-radius:50%;background:#3D7BF2;display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px">+9</div></div>
+ <div class="meta" style="left:527px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A8FA3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span style="margin-left:4px">3 min read</span></div>
+
+ <!-- Col 2 -->
+ <div class="lbl" style="left:649px;top:247px">Design Project</div>
+ <div class="dd" style="left:874px;width:110px"><span>Monthly</span><svg width="10" height="6" viewBox="0 0 10 6"><path d="M0 0h10L5 6z" fill="#3A3D4E"/></svg></div>
+ <div class="abs" style="left:649px;top:280px;display:flex;align-items:center;gap:8px;font-size:13px;color:#9A9EB0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9A9EB0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="11" height="18"/><path d="M16 9h3v12h-3M8 7h2M8 11h2M8 15h2M12 7h1M12 11h1M12 15h1M9 21v-3h3v3"/></svg><span>In Progress</span></div>
+ <div class="tiny-l" style="left:649px;top:335px">Team members</div>
+ <div class="tiny-l" style="left:793px;top:335px">Tasks</div>
+ <div class="tiny-l" style="left:890px;top:335px">Hours</div>
+ <div class="mini" style="left:649px;top:361px"><div class="av" style="width:24px;height:24px;border-radius:50%;"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" fill="#E4E6F0"/><path d="M5 40 Q6 29 20 28 Q34 29 35 40Z" fill="#3E4560"/><rect x="17" y="22" width="6" height="7" fill="#E6B08C"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#E6B08C"/><path d="M11 17 Q11 7 20 7 Q29 7 29 17 Q27 12 20 12 Q13 12 11 17Z" fill="#3A2418"/></svg></div><div class="av" style="width:24px;height:24px;border-radius:50%;background:#fff;border:1.5px solid #9C8BEA;display:flex;align-items:center;justify-content:center;color:#8C78E6;font-size:10px;margin-left:-5px">R</div><div class="av" style="width:24px;height:24px;border-radius:50%;background:#3D7BF2;border:1.5px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;margin-left:-1px">R</div></div>
+ <div class="big" style="left:793px;top:351px">24</div>
+ <div class="dot" style="left:832px;top:357px;width:6px;height:6px"></div>
+ <div class="big" style="left:890px;top:351px">190</div>
+ <div class="hr" style="left:649px;top:418px;width:336px"></div>
+ <div class="lbl" style="left:649px;top:437px">Tasks Activity</div>
+ <div class="weekly">Weekly<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3D7BF2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+ <div class="legend" style="left:649px"><i style="background:#3CC27A"></i>Created<b>131</b></div>
+ <div class="legend" style="left:793px"><i style="background:#A26BEE"></i>Completed<b>91</b></div>
+ <svg class="chart" width="336" height="94" viewBox="0 0 336 94">
+<defs>
+ <linearGradient id="gf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3CC27A" stop-opacity=".18"/><stop offset="1" stop-color="#3CC27A" stop-opacity="0"/></linearGradient>
+ <linearGradient id="pf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9A62F0" stop-opacity=".16"/><stop offset="1" stop-color="#F4F5FA" stop-opacity=".9"/></linearGradient>
+ <linearGradient id="hl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9F0FE" stop-opacity="0"/><stop offset="1" stop-color="#E3ECFD"/></linearGradient>
+</defs>
+<rect x="0" y="40" width="336" height="54" fill="#F5F6FA"/>
+<rect x="145" y="40" width="30" height="54" fill="url(#hl)"/>
+<path d="M0,32 C4.3,30.8 17.3,25.3 26,25 C34.7,24.7 43.3,28.3 52,30 C60.7,31.7 69.0,36.8 78,35 C87.0,33.2 97.0,20.7 106,19 C115.0,17.3 123.0,23.8 132,25 C141.0,26.2 151.0,26.0 160,26 C169.0,26.0 177.3,26.2 186,25 C194.7,23.8 203.3,19.3 212,19 C220.7,18.7 229.0,23.3 238,23 C247.0,22.7 255.7,18.7 266,17 C276.3,15.3 288.3,12.7 300,13 C311.7,13.3 330.0,18.0 336,19 L336,94 L0,94Z" fill="url(#gf)"/>
+<path d="M0,43 C5.0,45.0 20.7,54.3 30,55 C39.3,55.7 47.3,49.0 56,47 C64.7,45.0 73.0,42.8 82,43 C91.0,43.2 101.0,46.5 110,48 C119.0,49.5 127.7,51.7 136,52 C144.3,52.3 151.7,51.5 160,50 C168.3,48.5 177.0,43.5 186,43 C195.0,42.5 205.0,47.0 214,47 C223.0,47.0 230.7,43.3 240,43 C249.3,42.7 259.3,45.0 270,45 C280.7,45.0 293.0,42.7 304,43 C315.0,43.3 330.7,46.3 336,47 L336,94 L0,94Z" fill="url(#pf)"/>
+<path d="M0,32 C4.3,30.8 17.3,25.3 26,25 C34.7,24.7 43.3,28.3 52,30 C60.7,31.7 69.0,36.8 78,35 C87.0,33.2 97.0,20.7 106,19 C115.0,17.3 123.0,23.8 132,25 C141.0,26.2 151.0,26.0 160,26 C169.0,26.0 177.3,26.2 186,25 C194.7,23.8 203.3,19.3 212,19 C220.7,18.7 229.0,23.3 238,23 C247.0,22.7 255.7,18.7 266,17 C276.3,15.3 288.3,12.7 300,13 C311.7,13.3 330.0,18.0 336,19" fill="none" stroke="#2FB56A" stroke-width="2"/>
+<path d="M0,43 C5.0,45.0 20.7,54.3 30,55 C39.3,55.7 47.3,49.0 56,47 C64.7,45.0 73.0,42.8 82,43 C91.0,43.2 101.0,46.5 110,48 C119.0,49.5 127.7,51.7 136,52 C144.3,52.3 151.7,51.5 160,50 C168.3,48.5 177.0,43.5 186,43 C195.0,42.5 205.0,47.0 214,47 C223.0,47.0 230.7,43.3 240,43 C249.3,42.7 259.3,45.0 270,45 C280.7,45.0 293.0,42.7 304,43 C315.0,43.3 330.7,46.3 336,47" fill="none" stroke="#9A55EE" stroke-width="2"/>
+<text x="26" y="70" text-anchor="middle" font-size="9" fill="#C5C8D3" font-weight="400">10</text><text x="26" y="81" text-anchor="middle" font-size="9" fill="#C5C8D3" font-weight="400">Sep</text><text x="71" y="70" text-anchor="middle" font-size="9" fill="#C5C8D3" font-weight="400">12</text><text x="71" y="81" text-anchor="middle" font-size="9" fill="#C5C8D3" font-weight="400">Sep</text><text x="115" y="70" text-anchor="middle" font-size="9" fill="#C5C8D3" font-weight="400">14</text><text x="115" y="81" text-anchor="middle" font-size="9" fill="#C5C8D3" font-weight="400">Sep</text><text x="160" y="70" text-anchor="middle" font-size="9" fill="#3D7BF2" font-weight="500">16</text><text x="160" y="81" text-anchor="middle" font-size="9" fill="#3D7BF2" font-weight="500">Sep</text><text x="204" y="70" text-anchor="middle" font-size="9" fill="#C5C8D3" font-weight="400">18</text><text x="204" y="81" text-anchor="middle" font-size="9" fill="#C5C8D3" font-weight="400">Sep</text><text x="248" y="70" text-anchor="middle" font-size="9" fill="#C5C8D3" font-weight="400">20</text><text x="248" y="81" text-anchor="middle" font-size="9" fill="#C5C8D3" font-weight="400">Sep</text><text x="292" y="70" text-anchor="middle" font-size="9" fill="#C5C8D3" font-weight="400">22</text><text x="292" y="81" text-anchor="middle" font-size="9" fill="#C5C8D3" font-weight="400">Sep</text>
+<circle cx="160" cy="26" r="5" fill="#fff" stroke="#8C93A8" stroke-width="1.6"/>
+<circle cx="160" cy="50" r="5" fill="#fff" stroke="#8C93A8" stroke-width="1.6"/>
+</svg>
+
+ <!-- Col 3 -->
+ <div class="lbl" style="left:1018px;top:245px">New Broadcast</div>
+ <div class="dd" style="left:1287px;width:118px"><span>Everyone</span><svg width="10" height="6" viewBox="0 0 10 6"><path d="M0 0h10L5 6z" fill="#3A3D4E"/></svg></div>
+ <div class="tiny-l" style="left:1024px;top:316px">Group Name</div>
+ <div class="ta">Good Job Design team 🎉 &nbsp;clien<span class="cur"></span></div>
+ <div class="abs" style="left:1014px;top:471px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3D7BF2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+ <span class="emo" style="left:1059px">😲</span><span class="emo" style="left:1099px">😀</span><span class="emo" style="left:1140px">🧕</span><span class="emo" style="left:1180px">🥳</span><span class="emo" style="left:1220px">😁</span><span class="emo" style="left:1260px">😆</span><span class="emo" style="left:1301px">🔥</span><span class="emo" style="left:1341px">🎉</span>
+ <div class="abs" style="left:1390px;top:471px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3D7BF2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+ <div class="hr" style="left:1018px;top:520px;width:387px"></div>
+ <div class="tiny-l" style="left:1018px;top:533px">Add Collaborators</div>
+ <div class="chip" style="left:1018px;background:#EEEFF4"><div class="av" style="width:22px;height:22px;border-radius:50%;"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" fill="#D6DAE8"/><path d="M5 40 Q6 29 20 28 Q34 29 35 40Z" fill="#3E4560"/><rect x="17" y="22" width="6" height="7" fill="#EFC3A3"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#EFC3A3"/><path d="M11 17 Q11 7 20 7 Q29 7 29 17 Q27 12 20 12 Q13 12 11 17Z" fill="#3A2A1E"/></svg></div><span>Scott</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3A3D4E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+ <div class="chip" style="left:1131px;background:#DFF5E8"><div class="av" style="width:22px;height:22px;border-radius:50%;"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" fill="#F6EEDF"/><path d="M5 40 Q6 29 20 28 Q34 29 35 40Z" fill="#E8E2F0"/><rect x="17" y="22" width="6" height="7" fill="#F2CBAA"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#F2CBAA"/><path d="M10 30 Q8 8 20 7 Q32 8 30 30 L27 30 Q28 14 20 13 Q12 14 13 30Z" fill="#D7A25A"/></svg></div><span style="color:#7A8F84">Jessica</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3A3D4E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+ <div class="addc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B7BBC8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div>
+ <div class="grip" style="left:1379px;top:568px"></div><div class="grip" style="left:1401px;top:568px"></div>
+ <div class="grip" style="left:1379px;top:588px"></div><div class="grip" style="left:1401px;top:588px"></div>
+
+ <div class="expand"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E2134" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+
+ <!-- Recently Completed Tasks -->
+ <div class="lbl" style="left:275px;top:690px">Recently Completed Tasks</div>
+ <div class="res">06 results</div>
+ <div class="dashc"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6C9CF5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div>
+ <div class="mini" style="left:908px;top:694px"><div class="av" style="width:28px;height:28px;border-radius:50%;"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" fill="#FBE7DA"/><path d="M5 40 Q6 29 20 28 Q34 29 35 40Z" fill="#F2D6C4"/><rect x="17" y="22" width="6" height="7" fill="#F0C2A0"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#F0C2A0"/><path d="M10 30 Q8 8 20 7 Q32 8 30 30 L27 30 Q28 14 20 13 Q12 14 13 30Z" fill="#C9642B"/></svg></div><div class="av" style="width:28px;height:28px;border-radius:50%;"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" fill="#F3DDC6"/><path d="M5 40 Q6 29 20 28 Q34 29 35 40Z" fill="#D9A06A"/><rect x="17" y="22" width="6" height="7" fill="#8C5A3C"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#8C5A3C"/><circle cx="14" cy="12" r="5" fill="#1C1412"/><circle cx="20" cy="9" r="5.5" fill="#1C1412"/><circle cx="26" cy="12" r="5" fill="#1C1412"/><circle cx="12" cy="17" r="3.5" fill="#1C1412"/><circle cx="28" cy="17" r="3.5" fill="#1C1412"/></svg></div><div class="av" style="width:28px;height:28px;border-radius:50%;"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" fill="#EADBCF"/><path d="M5 40 Q6 29 20 28 Q34 29 35 40Z" fill="#2C2F44"/><rect x="17" y="22" width="6" height="7" fill="#C08560"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#C08560"/><path d="M11 17 Q11 7 20 7 Q29 7 29 17 Q27 12 20 12 Q13 12 11 17Z" fill="#1E1614"/></svg></div></div>
+
+ <div class="row" style="top:772px">
+  <div class="lg">G</div><div class="rdiv"></div>
+  <div class="rt">Logo Design</div>
+  <div class="rc">Client: <span>Google</span></div>
+  <div class="st"><span class="ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Completed</div>
+  <div class="asg">Assignee</div>
+  <div class="ring"><div class="av" style="width:40px;height:40px;border-radius:50%;"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" fill="#E9E4DA"/><path d="M5 40 Q6 29 20 28 Q34 29 35 40Z" fill="#2E3248"/><rect x="17" y="22" width="6" height="7" fill="#7A4A2E"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#7A4A2E"/><path d="M11 17 Q11 7 20 7 Q29 7 29 17 Q27 12 20 12 Q13 12 11 17Z" fill="#141010"/></svg></div></div>
+ </div>
+ <div class="row" style="top:878px">
+  <div class="lg">f</div><div class="rdiv"></div>
+  <div class="rt">Landing Page Design</div>
+  <div class="rc">Client: <span>Facebook</span></div>
+  <div class="st"><span class="ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Completed</div>
+  <div class="asg">Assignee</div>
+  <div class="ring"><div class="av" style="width:40px;height:40px;border-radius:50%;"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" fill="#EDE7F5"/><path d="M5 40 Q6 29 20 28 Q34 29 35 40Z" fill="#D7D1E8"/><rect x="17" y="22" width="6" height="7" fill="#F1C9A6"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#F1C9A6"/><path d="M10 30 Q8 8 20 7 Q32 8 30 30 L27 30 Q28 14 20 13 Q12 14 13 30Z" fill="#D9A65E"/></svg></div></div>
+ </div>
+
+ <!-- Scheduled Launches -->
+ <div class="lbl" style="left:1018px;top:692px">Scheduled Launches</div>
+ <div class="abs" style="left:1353px;top:696px;font-size:15px;color:#2F6FEB">View all</div>
+ <div class="srow" style="top:772px">
+  <div class="sd"><b>21</b><span>July 2023</span></div><div class="sdv"></div>
+  <div class="stt">The Bible of Mobile UX Design</div><div class="sts">Visual.inc</div>
+ </div>
+ <div class="srow" style="top:878px">
+  <div class="sd"><b>23</b><span>July 2023</span></div><div class="sdv"></div>
+  <div class="stt">Hubspot Landing Page Design</div><div class="sts">Hubspot</div>
+ </div>
+</div>
+</body></html>

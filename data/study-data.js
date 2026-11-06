@@ -111,6 +111,26 @@ window.STUDY_DATA = {
           ]
         },
         {
+          title: "LUMO about page v6",
+          category: "About",
+          description: "A big-bang themed About page for LUMO, built with AI using Three.js and a physics engine (cannon-es).",
+          tools: [],
+          links: [
+            { label: "View page", url: "2026/11/week1/About/bigbang-about-v6/bigbang-about/index.html", type: "demo" },
+            { label: "Download zip", url: "2026/11/week1/About/bigbang-about-v6.zip", type: "doc" }
+          ]
+        },
+        {
+          title: "LUMO about page v2",
+          category: "About",
+          description: "An earlier version of the big-bang themed About page for LUMO, built with AI using Three.js.",
+          tools: [],
+          links: [
+            { label: "View page", url: "2026/11/week1/About/bigbang-about-v2/bigbang-about/index.html", type: "demo" },
+            { label: "Download zip", url: "2026/11/week1/About/bigbang-about-v2.zip", type: "doc" }
+          ]
+        },
+        {
           title: "Open2U hero",
           category: "Video",
           description: "The hero film for the Open2U detail page, made with AI.",

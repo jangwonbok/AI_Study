@@ -69,8 +69,10 @@ window.STUDY_DATA = {
           category: "Web",
           description: "A monitoring and insights dashboard page, built with AI.",
           tools: [],
+          thumbnail: "2026/11/week1/Main/monitoring-insights/monitoring-insights/preview.png",
           links: [
-            { label: "View page", url: "2026/11/week1/Main/index.html", type: "demo" }
+            { label: "View page", url: "2026/11/week1/Main/index.html", type: "demo" },
+            { label: "Download zip", url: "2026/11/week1/Main/monitoring-insights.zip", type: "doc" }
           ]
         },
         {
